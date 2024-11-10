@@ -20,4 +20,7 @@ public class ModItems {
     public static final DeferredItem<Item> SPINNER_DOLPHIN_SPAWN_EGG = ITEMS.register("spinner_dolphin_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.SPINNER_DOLPHIN, 0x74a3af, 0xcdc9df, new Item.Properties()));
 
+    public static final DeferredItem<Item> GIANT_ISOPOD_SPAWN_EGG = ITEMS.register("giant_isopod_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.GIANT_ISOPOD, 0x74a3af, 0xcdc9df, new Item.Properties()));
+
 }

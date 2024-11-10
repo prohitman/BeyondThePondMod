@@ -1,6 +1,7 @@
 package com.prohitman.beyondthepond.init;
 
 import com.prohitman.beyondthepond.BeyondThePond;
+import com.prohitman.beyondthepond.entities.BoPCrab;
 import com.prohitman.beyondthepond.entities.BoPDolphin;
 import com.prohitman.beyondthepond.entities.BoPFish;
 import net.minecraft.core.registries.Registries;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.apache.logging.log4j.core.appender.rolling.action.IfAll;
 
 public class ModEntities {
     public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Registries.ENTITY_TYPE, BeyondThePond.MODID);
@@ -42,6 +44,20 @@ public class ModEntities {
                                     true
                             )),
                     MobCategory.CREATURE).sized(1.2f, 1).build("spinner_dolphin"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPCrab>> GIANT_ISOPOD = ENTITIES.register("giant_isopod",
+            () -> EntityType.Builder.<BoPCrab>of(((pEntityType, pLevel) ->
+                            new BoPCrab(pEntityType, pLevel,
+                                    6,
+                                    0.75,
+                                    0,
+                                    25,
+                                    2400,
+                                    false,
+                                    true,
+                                    true
+                            )),
+                    MobCategory.CREATURE).sized(0.5f, 0.5f).build("giant_isopod"));
     /**
      BoPFish (fightsBack?, maxHeadRotation?, isPosinous?, dealsDamage?, canFlop?, Bucketable?):
         -Channel Catfish
@@ -64,7 +80,7 @@ public class ModEntities {
      BoPCrab (maxHeadRotation?, fightsBack?, prefersWater?, driesOutOfWater?):
         -CoconutCrab
         -European Lobster
-        -GiantIsopod
+        -Giant Isopod
         -Japanese Spider Crab
         -Sally light foot Crab
         -Tasmanian Crab

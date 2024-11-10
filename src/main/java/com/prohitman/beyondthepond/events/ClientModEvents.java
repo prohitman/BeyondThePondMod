@@ -8,11 +8,13 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 @EventBusSubscriber(modid = BeyondThePond.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -28,6 +30,12 @@ public class ClientModEvents {
                     (pContext -> new GeoEntityRenderer<>(pContext,
                             new BoPDolphinModel(ResourceLocation.fromNamespaceAndPath(BeyondThePond.MODID,
                                     "spinner_dolphin")))));
+
+            EntityRenderers.register(ModEntities.GIANT_ISOPOD.get(),
+                    (pContext -> new GeoEntityRenderer<>(pContext,
+                            new DefaultedEntityGeoModel<>(ResourceLocation.fromNamespaceAndPath(BeyondThePond.MODID,
+                                    "giant_isopod")))));
+
         });
     }
 }

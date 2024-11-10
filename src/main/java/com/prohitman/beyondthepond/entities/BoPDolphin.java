@@ -61,8 +61,6 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(BoPDolphin.class, EntityDataSerializers.INT);
     static final TargetingConditions SWIM_WITH_PLAYER_TARGETING = TargetingConditions.forNonCombat().range(10.0).ignoreLineOfSight();
-    public static final int TOTAL_AIR_SUPPLY = 4800;
-    private static final int TOTAL_MOISTNESS_LEVEL = 2400;
     public static final Predicate<ItemEntity> ALLOWED_ITEMS = p_350083_ -> !p_350083_.hasPickUpDelay() && p_350083_.isAlive() && p_350083_.isInWater();
 
     public boolean canIdle;

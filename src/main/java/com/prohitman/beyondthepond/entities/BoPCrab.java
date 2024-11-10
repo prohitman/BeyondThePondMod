@@ -1,5 +1,6 @@
 package com.prohitman.beyondthepond.entities;
 
+import com.prohitman.beyondthepond.entities.goals.BoPGoToWaterGoal;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -8,28 +9,24 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
-import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.*;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.animal.Turtle;
+import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.pathfinder.PathType;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -40,56 +37,61 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
+public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
-    private static final Predicate<LivingEntity> SCARY_MOB = p_348288_ -> {
-        if (p_348288_ instanceof Player player && player.isCreative()) {
-            return false;
-        }
-
-        return !p_348288_.getType().is(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH);
-    };
-    static final TargetingConditions targetingConditions = TargetingConditions.forNonCombat()
-            .ignoreInvisibilityTesting()
-            .ignoreLineOfSight()
-            .selector(SCARY_MOB);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     private int remainingPersistentAngerTime;
     @javax.annotation.Nullable
     private UUID persistentAngerTarget;
-    public boolean canFlop;
-    public boolean fightsBack;
-    public int maxHeadRotation;
-    public boolean isBucketable;
     public double maxHealth;
     public double maxSpeed;
     public double attackDamage;
-    public boolean isPoisonous;
-    public boolean isDamaging;
+    public int maxHeadRotation;
+    public boolean fightsBack;
+    public boolean driesOut;
+    public boolean prefersWater;
+    public int maxAirSupply;
 
-    public BoPFish(EntityType<? extends AbstractFish> pEntityType, Level pLevel, double maxHealth, double maxSpeed, double attackDamage, int maxHeadRotation, boolean isBucketable, boolean fightsBack, boolean canFlop, int xp, boolean isPoisonous, boolean isDamaging) {
+    public BoPCrab(EntityType<? extends WaterAnimal> pEntityType, Level pLevel, double maxHealth, double maxSpeed, double attackDamage, int maxHeadRotation, int maxAirSupply, boolean fightsBack, boolean driesOut, boolean prefersWater/*, boolean flippedMovement*/) {
         super(pEntityType, pLevel);
-        this.canFlop = canFlop;
-        this.fightsBack = fightsBack;
-        this.maxHeadRotation = maxHeadRotation;
-        this.isBucketable = isBucketable;
-        this.xpReward = xp;
         this.maxHealth = maxHealth;
         this.maxSpeed = maxSpeed;
         this.attackDamage = attackDamage;
-        this.isPoisonous = isPoisonous;
-        this.isDamaging = isDamaging;
+        this.maxHeadRotation = maxHeadRotation;
+        this.fightsBack = fightsBack;
+        this.driesOut = driesOut;
+        this.prefersWater = prefersWater;
+        this.maxAirSupply = maxAirSupply;
+
+        this.setPathfindingMalus(PathType.WATER, prefersWater ? 0 : 1);
+    }
+
+    @Override
+    public int getMaxHeadYRot() {
+        return maxHeadRotation;
+    }
+
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pSpawnType, @Nullable SpawnGroupData pSpawnGroupData) {
+        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
+        this.setHealth(this.getMaxHealth());
+        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(maxSpeed);
+        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(attackDamage);
+        return super.finalizeSpawn(pLevel, pDifficulty, pSpawnType, pSpawnGroupData);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Player.class, 8.0F, 1.6, 1.4, EntitySelector.NO_SPECTATORS::test));
-        this.goalSelector.addGoal(4, new BoPFish.FishSwimGoal(this));
+        super.registerGoals();
+        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
+        this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(9, new BoPGoToWaterGoal(this, 1.2f));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.25){
             @Override
             public boolean canUse() {
-                if(this.mob instanceof BoPFish fish){
-                    if(fish.fightsBack){
+                if(this.mob instanceof BoPCrab crab){
+                    if(crab.fightsBack){
                         return false;
                     }
                 }
@@ -127,67 +129,60 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
         if(!this.level().isClientSide && this.fightsBack){
             this.updatePersistentAnger((ServerLevel)this.level(), true);
         }
-        if (this.isAlive() && (isPoisonous || isDamaging)) {
-            for (LivingEntity mob : this.level()
-                    .getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(0.3), p_149013_ -> targetingConditions.test(this, p_149013_))) {
-                if (mob.isAlive()) {
-                    this.touch(mob);
-                }
-
-            }
-        }
     }
 
-    private void touch(LivingEntity pMob) {
-        if (pMob.hurt(this.damageSources().mobAttack(this), 1)) {
-            if(isPoisonous){
-                pMob.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0), this);
+    public static AttributeSupplier.Builder createAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 5.0)
+                .add(Attributes.MOVEMENT_SPEED, 1.2F)
+                .add(Attributes.ATTACK_DAMAGE, 3.0);
+    }
+
+    @Override
+    protected void handleAirSupply(int pAirSupply) {
+        if(driesOut){
+            if (this.isAlive() && !this.isInWaterOrBubble()) {
+                this.setAirSupply(pAirSupply - 1);
+                if (this.getAirSupply() == -maxAirSupply) {
+                    this.setAirSupply(0);
+                    this.hurt(this.damageSources().drown(), 2.0F);
+                }
+            } else {
+                this.setAirSupply(300);
             }
-            this.playSound(SoundEvents.PUFFER_FISH_STING, 1.0F, 1.0F);
         }
     }
 
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pSpawnType, @Nullable SpawnGroupData pSpawnGroupData) {
-        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
-        this.setHealth(this.getMaxHealth());
-        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(attackDamage);
-        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(maxSpeed);
-
-        return super.finalizeSpawn(pLevel, pDifficulty, pSpawnType, pSpawnGroupData);
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return SoundEvents.TROPICAL_FISH_HURT;
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 3.0)
-                .add(Attributes.MOVEMENT_SPEED, 1)
-                .add(Attributes.ATTACK_DAMAGE, 1);
-    }
-
+    @Nullable
     @Override
-    public int getMaxHeadYRot() {
-        return maxHeadRotation;
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.TROPICAL_FISH_DEATH;
     }
 
-    public RawAnimation getSwimAnimation(){
-        return RawAnimation.begin().thenLoop("swim");
+    public RawAnimation getWalkingAnimation(){
+        return RawAnimation.begin().thenLoop("walking");
     }
 
-    public RawAnimation getFlopAnimation(){
-        return RawAnimation.begin().thenLoop("flop");
+    public RawAnimation getIdleAnimation(){
+        return RawAnimation.begin().thenLoop("idle");
     }
 
     @Override
     public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "Fish", 5, this::moveAnimController));
+        controllers.add(new AnimationController<>(this, "Crab", 5, this::moveAnimController));
     }
 
-    protected <E extends BoPFish> PlayState moveAnimController(final AnimationState<E> event) {
-        if (this.isInWaterOrBubble()){
-            event.setAndContinue(getSwimAnimation());
-        } else if(canFlop) {
-            event.setAndContinue(getFlopAnimation());
+    protected <E extends BoPCrab> PlayState moveAnimController(final AnimationState<E> event) {
+        if (event.isMoving()){
+            event.setAndContinue(getWalkingAnimation());
+        } else {
+            event.setAndContinue(getIdleAnimation());
         }
 
         return PlayState.CONTINUE;
@@ -196,37 +191,6 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return geoCache;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.COD_DEATH;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return SoundEvents.COD_HURT;
-    }
-
-    @Override
-    protected SoundEvent getFlopSound() {
-        return SoundEvents.COD_FLOP;
-    }
-
-    @Override
-    public ItemStack getBucketItemStack() {
-        return null;
-    }
-
-    @Override
-    protected InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
-        if(this.isBucketable){
-            return super.mobInteract(pPlayer, pHand);
-        } else {
-            return InteractionResult.PASS;
-        }
     }
 
     @Override
@@ -286,19 +250,5 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
         }
 
         return UUID.randomUUID();
-    }
-
-    static class FishSwimGoal extends RandomSwimmingGoal {
-        private final BoPFish fish;
-
-        public FishSwimGoal(BoPFish pFish) {
-            super(pFish, 1.0, 40);
-            this.fish = pFish;
-        }
-
-        @Override
-        public boolean canUse() {
-            return this.fish.canRandomSwim() && super.canUse();
-        }
     }
 }

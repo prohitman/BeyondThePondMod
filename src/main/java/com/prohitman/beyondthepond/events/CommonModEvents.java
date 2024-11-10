@@ -1,6 +1,7 @@
 package com.prohitman.beyondthepond.events;
 
 import com.prohitman.beyondthepond.BeyondThePond;
+import com.prohitman.beyondthepond.entities.BoPCrab;
 import com.prohitman.beyondthepond.entities.BoPDolphin;
 import com.prohitman.beyondthepond.entities.BoPFish;
 import com.prohitman.beyondthepond.init.ModEntities;
@@ -19,5 +20,7 @@ public class CommonModEvents {
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.RAINBOW_TROUT.get(), BoPFish.createAttributes().build());
         event.put(ModEntities.SPINNER_DOLPHIN.get(), BoPDolphin.createAttributes().build());
+        event.put(ModEntities.GIANT_ISOPOD.get(), BoPCrab.createAttributes().build());
+
     }
 }
