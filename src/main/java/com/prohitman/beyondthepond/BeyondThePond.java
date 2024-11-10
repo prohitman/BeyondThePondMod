@@ -1,6 +1,7 @@
 package com.prohitman.beyondthepond;
 
 import com.prohitman.beyondthepond.init.ModCreativeTab;
+import com.prohitman.beyondthepond.init.ModEntities;
 import com.prohitman.beyondthepond.init.ModItems;
 import org.slf4j.Logger;
 
@@ -35,6 +36,8 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import software.bernie.geckolib.GeckoLib;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 @Mod(BeyondThePond.MODID)
 public class BeyondThePond
@@ -47,6 +50,7 @@ public class BeyondThePond
 
         ModItems.ITEMS.register(modEventBus);
         ModCreativeTab.CREATIVE_MODE_TABS.register(modEventBus);
+        ModEntities.ENTITIES.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
     }

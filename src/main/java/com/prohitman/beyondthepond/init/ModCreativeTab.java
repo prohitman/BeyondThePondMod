@@ -14,9 +14,9 @@ public class ModCreativeTab {
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BTP_TAB = CREATIVE_MODE_TABS.register("beyondthepond_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.beyondthepond"))
-            .icon(() -> Items.REDSTONE.getDefaultInstance())
+            .icon(() -> Items.COD.getDefaultInstance())
             .displayItems((parameters, output) -> {
-                //output.accept(EXAMPLE_ITEM.get());
+                output.accept(ModItems.RAINBOW_TROUT_SPAWN_EGG.get());
             }).build());
 
 }
