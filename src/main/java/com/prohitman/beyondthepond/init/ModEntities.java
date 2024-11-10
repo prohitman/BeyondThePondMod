@@ -46,6 +46,43 @@ public class ModEntities {
                             )),
                     MobCategory.CREATURE).sized(1.2f, 1).build("spinner_dolphin"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> ORCA = ENTITIES.register("orca",
+            () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
+                            new BoPDolphin(pEntityType, pLevel,
+                                    50,
+                                    1.2,
+                                    7800,
+                                    3000,
+                                    true,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(2.75f, 2.5f).build("orca"));
+
+    //Fix Later
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> HUMPBACK_WHALE = ENTITIES.register("humpback_whale",
+            () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
+                            new BoPDolphin(pEntityType, pLevel,
+                                    200,
+                                    1,
+                                    10000,
+                                    8000,
+                                    false,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(8f, 6f).build("humpback_whale"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> MANATEE = ENTITIES.register("manatee",
+            () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
+                            new BoPDolphin(pEntityType, pLevel,
+                                    40,
+                                    0.5f,
+                                    4000,
+                                    5000,
+                                    true,
+                                    true
+                            )),
+                    MobCategory.CREATURE).sized(2.2f, 1.85f).build("manatee"));
+
     public static final DeferredHolder<EntityType<?>, EntityType<BoPCrab>> GIANT_ISOPOD = ENTITIES.register("giant_isopod",
             () -> EntityType.Builder.<BoPCrab>of(((pEntityType, pLevel) ->
                             new BoPCrab(pEntityType, pLevel,

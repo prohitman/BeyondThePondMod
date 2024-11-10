@@ -20,6 +20,15 @@ public class ModItems {
     public static final DeferredItem<Item> SPINNER_DOLPHIN_SPAWN_EGG = ITEMS.register("spinner_dolphin_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.SPINNER_DOLPHIN, 0x74a3af, 0xcdc9df, new Item.Properties()));
 
+    public static final DeferredItem<Item> ORCA_SPAWN_EGG = ITEMS.register("orca_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.ORCA, 0x74a3af, 0xcdc9df, new Item.Properties()));
+
+    public static final DeferredItem<Item> HUMPBACK_WHALE_SPAWN_EGG = ITEMS.register("humpback_whale_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.HUMPBACK_WHALE, 0x74a3af, 0xcdc9df, new Item.Properties()));
+
+    public static final DeferredItem<Item> MANATEE_SPAWN_EGG = ITEMS.register("manatee_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.MANATEE, 0x74a3af, 0xcdc9df, new Item.Properties()));
+
     public static final DeferredItem<Item> GIANT_ISOPOD_SPAWN_EGG = ITEMS.register("giant_isopod_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.GIANT_ISOPOD, 0x74a3af, 0xcdc9df, new Item.Properties()));
 

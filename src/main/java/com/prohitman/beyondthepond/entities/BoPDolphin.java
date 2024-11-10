@@ -1,6 +1,7 @@
 package com.prohitman.beyondthepond.entities;
 
 import com.prohitman.beyondthepond.entities.goals.BoPJumpGoal;
+import com.prohitman.beyondthepond.init.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -72,8 +73,9 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
 
     public BoPDolphin(EntityType<? extends BoPDolphin> pEntityType, Level pLevel, double maxHealth, double maxSpeed, int maxAirSupply, int maxMoistnessLevel, boolean canIdle, boolean canBeLeashed) {
         super(pEntityType, pLevel);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new SmoothSwimmingLookControl(this, 10);
+        boolean isWhale = pEntityType == ModEntities.HUMPBACK_WHALE.get();
+        this.moveControl = new SmoothSwimmingMoveControl(this, isWhale ? 4 : 85, isWhale ? 5 : 10, 0.01F, 0.05F, true);
+        this.lookControl = new SmoothSwimmingLookControl(this, isWhale ? 3 : 10);
         this.setCanPickUpLoot(true);
         this.maxAirSupply = maxAirSupply;
         this.maxHealth = maxHealth;
@@ -224,6 +226,7 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
                 }
 
                 if (this.onGround()) {
+                    this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0);
 /*                    this.setDeltaMovement(
                             this.getDeltaMovement()
                                     .add((double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.5, (double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F))
@@ -231,6 +234,8 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
                     this.setYRot(this.random.nextFloat() * 360.0F);
                     this.setOnGround(false);
                     this.hasImpulse = true;*/
+                } else if(this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() == 0){
+                    this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(maxSpeed);
                 }
             }
 
@@ -371,7 +376,7 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
             event.setAndContinue(getSwimAnimation());
         } else if(canIdle && !event.isMoving() && this.isInWaterOrBubble()) {
             event.setAndContinue(getIdleAnimation());
-        } else {
+        } else if(this.onGround()){
             event.setAndContinue(getBeachedAnimation());
         }
 

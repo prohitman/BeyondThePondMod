@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -33,10 +34,13 @@ public class ClientModEvents {
             registerRenderers(ModEntities.SPINNER_DOLPHIN.get(), "spinner_dolphin", false, true, 1, 1);
             registerRenderers(ModEntities.GIANT_ISOPOD.get(), "giant_isopod", false, false, 0, 0.35f );
             registerRenderers(ModEntities.GREEN_SEA_TURTLE.get(), "green_sea_turtle", true, false, 0, 0.75f);
+            registerRenderers(ModEntities.MANATEE.get(), "manatee", false, true, 1, 1);
+            registerRenderers(ModEntities.ORCA.get(), "orca", false, true, 1.5f, 1.5f);
+            registerRenderers(ModEntities.HUMPBACK_WHALE.get(), "humpback_whale", false, true, 2, 3);
         });
     }
 
-    public static void registerRenderers(EntityType<? extends GeoEntity> entityType, String name, boolean turnsHead, boolean hasScale, float scale, float shadow){
+    public static <T extends LivingEntity & GeoEntity> void registerRenderers(EntityType<T> entityType, String name, boolean turnsHead, boolean hasScale, float scale, float shadow){
         EntityRenderers.register(entityType,
                 (pContext -> new BoPBaseRenderer<>(pContext, name, turnsHead, hasScale, scale, shadow)));
     }

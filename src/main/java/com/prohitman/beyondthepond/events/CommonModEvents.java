@@ -23,6 +23,9 @@ public class CommonModEvents {
         event.put(ModEntities.SPINNER_DOLPHIN.get(), BoPDolphin.createAttributes().build());
         event.put(ModEntities.GIANT_ISOPOD.get(), BoPCrab.createAttributes().build());
         event.put(ModEntities.GREEN_SEA_TURTLE.get(), BoPTurtle.createAttributes().build());
+        event.put(ModEntities.MANATEE.get(), BoPDolphin.createAttributes().build());
+        event.put(ModEntities.ORCA.get(), BoPDolphin.createAttributes().build());
+        event.put(ModEntities.HUMPBACK_WHALE.get(), BoPDolphin.createAttributes().build());
 
     }
 }
