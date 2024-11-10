@@ -20,5 +20,7 @@ public class ModItemModelGen extends ItemModelProvider {
 
         //basicItem(ModItems.FROST_POTTERY_SHERD.get());
         withExistingParent(ModItems.RAINBOW_TROUT_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.SPINNER_DOLPHIN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+
     }
 }

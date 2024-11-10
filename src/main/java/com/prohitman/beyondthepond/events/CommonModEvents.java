@@ -1,6 +1,7 @@
 package com.prohitman.beyondthepond.events;
 
 import com.prohitman.beyondthepond.BeyondThePond;
+import com.prohitman.beyondthepond.entities.BoPDolphin;
 import com.prohitman.beyondthepond.entities.BoPFish;
 import com.prohitman.beyondthepond.init.ModEntities;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -17,5 +18,6 @@ public class CommonModEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.RAINBOW_TROUT.get(), BoPFish.createAttributes().build());
+        event.put(ModEntities.SPINNER_DOLPHIN.get(), BoPDolphin.createAttributes().build());
     }
 }

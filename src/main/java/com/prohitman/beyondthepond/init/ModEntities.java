@@ -1,6 +1,7 @@
 package com.prohitman.beyondthepond.init;
 
 import com.prohitman.beyondthepond.BeyondThePond;
+import com.prohitman.beyondthepond.entities.BoPDolphin;
 import com.prohitman.beyondthepond.entities.BoPFish;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
@@ -29,6 +30,18 @@ public class ModEntities {
                             false
                             )),
                     MobCategory.CREATURE).sized(0.5f, 0.5f).build("rainbow_trout"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> SPINNER_DOLPHIN = ENTITIES.register("spinner_dolphin",
+            () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
+                            new BoPDolphin(pEntityType, pLevel,
+                                    20,
+                                    1.2,
+                                    4800,
+                                    2400,
+                                    false,
+                                    true
+                            )),
+                    MobCategory.CREATURE).sized(1.2f, 1).build("spinner_dolphin"));
     /**
      BoPFish (fightsBack?, maxHeadRotation?, isPosinous?, dealsDamage?, canFlop?, Bucketable?):
         -Channel Catfish
@@ -43,7 +56,7 @@ public class ModEntities {
         -StingRay
         -Sunfish??
         -BlueRibbonEel
-     BoPDolphin (maxHeadRotation?):
+     BoPDolphin (maxHeadRotation?¿, maxHealth?, maxSpeed?, hasIdle?, canBeLeashed?, maxAirSupply?):
         -Orca
         -HumpBackWhale
         -Manatee

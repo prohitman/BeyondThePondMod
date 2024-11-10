@@ -1,3 +1,7 @@
 {
+  "entity.beyondthepond.rainbow_trout": "Rainbow Trout",
+  "entity.beyondthepond.spinner_dolphin": "Spinner Dolphin",
+  "item.beyondthepond.rainbow_trout_spawn_egg": "Rainbow Trout Spawn Egg",
+  "item.beyondthepond.spinner_dolphin_spawn_egg": "Spinner Dolphin Spawn Egg",
   "itemGroup.beyondthepond": "Beyond The Pond"
 }

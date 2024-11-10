@@ -17,4 +17,7 @@ public class ModItems {
     public static final DeferredItem<Item> RAINBOW_TROUT_SPAWN_EGG = ITEMS.register("rainbow_trout_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.RAINBOW_TROUT, 0x74a3af, 0xcdc9df, new Item.Properties()));
 
+    public static final DeferredItem<Item> SPINNER_DOLPHIN_SPAWN_EGG = ITEMS.register("spinner_dolphin_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.SPINNER_DOLPHIN, 0x74a3af, 0xcdc9df, new Item.Properties()));
+
 }

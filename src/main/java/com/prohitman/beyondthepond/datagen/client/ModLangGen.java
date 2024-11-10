@@ -2,6 +2,8 @@ package com.prohitman.beyondthepond.datagen.client;
 
 
 import com.prohitman.beyondthepond.BeyondThePond;
+import com.prohitman.beyondthepond.init.ModEntities;
+import com.prohitman.beyondthepond.init.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -22,10 +24,12 @@ public class ModLangGen extends LanguageProvider {
     @Override
     protected void addTranslations() {
         //Items
-        //addItem(ModItems.SAP_BALL);
+        addItem(ModItems.RAINBOW_TROUT_SPAWN_EGG);
+        addItem(ModItems.SPINNER_DOLPHIN_SPAWN_EGG);
 
         //Entities
-        //addEntity(ModEntities.GLACEROS);
+        addEntity(ModEntities.RAINBOW_TROUT);
+        addEntity(ModEntities.SPINNER_DOLPHIN);
 
         add("itemGroup." + BeyondThePond.MODID, "Beyond The Pond");
     }
