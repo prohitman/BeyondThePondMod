@@ -84,6 +84,7 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        //Fix random stroll goal for drying out mobs
         this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(9, new BoPGoToWaterGoal(this, 1.2f));

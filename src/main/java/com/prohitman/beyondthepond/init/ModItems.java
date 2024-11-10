@@ -23,4 +23,7 @@ public class ModItems {
     public static final DeferredItem<Item> GIANT_ISOPOD_SPAWN_EGG = ITEMS.register("giant_isopod_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.GIANT_ISOPOD, 0x74a3af, 0xcdc9df, new Item.Properties()));
 
+    public static final DeferredItem<Item> GREEN_SEA_TURTLE_SPAWN_EGG = ITEMS.register("green_sea_turtle_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.GREEN_SEA_TURTLE, 0x74a3af, 0xcdc9df, new Item.Properties()));
+
 }

@@ -4,6 +4,7 @@ import com.prohitman.beyondthepond.BeyondThePond;
 import com.prohitman.beyondthepond.entities.BoPCrab;
 import com.prohitman.beyondthepond.entities.BoPDolphin;
 import com.prohitman.beyondthepond.entities.BoPFish;
+import com.prohitman.beyondthepond.entities.BoPTurtle;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -58,7 +59,16 @@ public class ModEntities {
                                     true
                             )),
                     MobCategory.CREATURE).sized(0.5f, 0.5f).build("giant_isopod"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPTurtle>> GREEN_SEA_TURTLE = ENTITIES.register("green_sea_turtle",
+            () -> EntityType.Builder.<BoPTurtle>of(((pEntityType, pLevel) ->
+                            new BoPTurtle(pEntityType, pLevel,
+                                    15,
+                                    0.25
+                            )),
+                    MobCategory.CREATURE).sized(1f, 0.75f).build("green_sea_turtle"));
     /**
+     * Add Scaling, then the rest of BoPDolphins, then Special Mobs,/ then the Rest of Mobs, then TrenchMonster, then items/buckets/drops, then recipes,/ then Marianas Trench biome, then Mob Spawns/
      BoPFish (fightsBack?, maxHeadRotation?, isPosinous?, dealsDamage?, canFlop?, Bucketable?):
         -Channel Catfish
         -CuttleFish
