@@ -1,10 +1,14 @@
 package com.prohitman.beyondthepond.datagen.server;
 
 import com.prohitman.beyondthepond.BeyondThePond;
+import com.prohitman.beyondthepond.init.ModEntities;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -13,17 +17,29 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class ModEntityTagsGen extends EntityTypeTagsProvider {
+    public static final TagKey<EntityType<?>> TURTLES = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(BeyondThePond.MODID, "turtles"));
+
     public ModEntityTagsGen(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, provider, BeyondThePond.MODID, existingFileHelper);
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-/*        this.tag(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES)
-                .add(ModEntities.FROSTOMPER.get());
-        this.tag(ModTags.EntityTypes.PSYCHO_BEAR_IGNORES)
-                .addTag(Tags.EntityTypes.BOSSES)
-                .add(ModEntities.FROSTOMPER.get())
-                .add(EntityType.CREEPER);*/
+        this.tag(TURTLES)
+                .add(ModEntities.GREEN_SEA_TURTLE.get());
+        this.tag(EntityTypeTags.AQUATIC)
+                .add(ModEntities.RAINBOW_TROUT.get())
+                .add(ModEntities.GIANT_ISOPOD.get())
+                .add(ModEntities.GREEN_SEA_TURTLE.get())
+                .add(ModEntities.SPINNER_DOLPHIN.get());
+        this.tag(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH)
+                .add(ModEntities.RAINBOW_TROUT.get())
+                .add(ModEntities.GIANT_ISOPOD.get())
+                .add(ModEntities.GREEN_SEA_TURTLE.get())
+                .add(ModEntities.SPINNER_DOLPHIN.get());
+        this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
+                .add(ModEntities.GREEN_SEA_TURTLE.get())
+                .add(ModEntities.GIANT_ISOPOD.get())
+                .add(ModEntities.RAINBOW_TROUT.get());
     }
 }
