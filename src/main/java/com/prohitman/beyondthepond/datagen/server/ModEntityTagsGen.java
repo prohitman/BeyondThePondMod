@@ -33,11 +33,17 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.HUMPBACK_WHALE.get())
                 .add(ModEntities.ORCA.get());
         this.tag(EntityTypeTags.AQUATIC)
+                .add(ModEntities.COCONUT_CRAB.get())
+                .add(ModEntities.COOKIE_CUTTER_SHARK.get())
+                .add(ModEntities.SPOTTED_EAGLE_STINGRAY.get())
                 .add(ModEntities.RAINBOW_TROUT.get())
                 .add(ModEntities.GIANT_ISOPOD.get())
                 .add(ModEntities.GREEN_SEA_TURTLE.get())
                 .add(ModEntities.SPINNER_DOLPHIN.get());
         this.tag(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH)
+                .add(ModEntities.COCONUT_CRAB.get())
+                .add(ModEntities.COOKIE_CUTTER_SHARK.get())
+                .add(ModEntities.SPOTTED_EAGLE_STINGRAY.get())
                 .add(ModEntities.ORCA.get())
                 .add(ModEntities.HUMPBACK_WHALE.get())
                 .add(ModEntities.MANATEE.get())
@@ -46,6 +52,8 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.GREEN_SEA_TURTLE.get())
                 .add(ModEntities.SPINNER_DOLPHIN.get());
         this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
+                .add(ModEntities.SPOTTED_EAGLE_STINGRAY.get())
+                .add(ModEntities.COOKIE_CUTTER_SHARK.get())
                 .add(ModEntities.ORCA.get())
                 .add(ModEntities.HUMPBACK_WHALE.get())
                 .add(ModEntities.MANATEE.get())

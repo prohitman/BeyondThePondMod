@@ -20,8 +20,11 @@ public class CommonModEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.RAINBOW_TROUT.get(), BoPFish.createAttributes().build());
+        event.put(ModEntities.COOKIE_CUTTER_SHARK.get(), BoPFish.createAttributes().build());
+        event.put(ModEntities.SPOTTED_EAGLE_STINGRAY.get(), BoPFish.createAttributes().build());
         event.put(ModEntities.SPINNER_DOLPHIN.get(), BoPDolphin.createAttributes().build());
         event.put(ModEntities.GIANT_ISOPOD.get(), BoPCrab.createAttributes().build());
+        event.put(ModEntities.COCONUT_CRAB.get(), BoPCrab.createAttributes().build());
         event.put(ModEntities.GREEN_SEA_TURTLE.get(), BoPTurtle.createAttributes().build());
         event.put(ModEntities.MANATEE.get(), BoPDolphin.createAttributes().build());
         event.put(ModEntities.ORCA.get(), BoPDolphin.createAttributes().build());

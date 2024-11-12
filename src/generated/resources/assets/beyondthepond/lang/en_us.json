@@ -1,4 +1,6 @@
 {
+  "entity.beyondthepond.coconut_crab": "Coconut Crab",
+  "entity.beyondthepond.cookie_cutter_shark": "Cookie Cutter Shark",
   "entity.beyondthepond.giant_isopod": "Giant Isopod",
   "entity.beyondthepond.green_sea_turtle": "Green Sea Turtle",
   "entity.beyondthepond.humpback_whale": "Humpback Whale",
@@ -6,6 +8,9 @@
   "entity.beyondthepond.orca": "Orca",
   "entity.beyondthepond.rainbow_trout": "Rainbow Trout",
   "entity.beyondthepond.spinner_dolphin": "Spinner Dolphin",
+  "entity.beyondthepond.spotted_eagle_stingray": "Spotted Eagle Stingray",
+  "item.beyondthepond.coconut_crab_spawn_egg": "Coconut Crab Spawn Egg",
+  "item.beyondthepond.cookie_cutter_shark_spawn_egg": "Cookie Cutter Shark Spawn Egg",
   "item.beyondthepond.giant_isopod_spawn_egg": "Giant Isopod Spawn Egg",
   "item.beyondthepond.green_sea_turtle_spawn_egg": "Green Sea Turtle Spawn Egg",
   "item.beyondthepond.humpback_whale_spawn_egg": "Humpback Whale Spawn Egg",
@@ -13,5 +18,6 @@
   "item.beyondthepond.orca_spawn_egg": "Orca Spawn Egg",
   "item.beyondthepond.rainbow_trout_spawn_egg": "Rainbow Trout Spawn Egg",
   "item.beyondthepond.spinner_dolphin_spawn_egg": "Spinner Dolphin Spawn Egg",
+  "item.beyondthepond.spotted_eagle_stingray_spawn_egg": "Spotted Eagle Stingray Spawn Egg",
   "itemGroup.beyondthepond": "Beyond The Pond"
 }

@@ -13,6 +13,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
@@ -63,7 +64,7 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
         this.prefersWater = prefersWater;
         this.maxAirSupply = maxAirSupply;
 
-        this.setPathfindingMalus(PathType.WATER, prefersWater ? 0 : 1);
+        this.setPathfindingMalus(PathType.WATER, prefersWater ? 0 : 2);
     }
 
     @Override
@@ -84,17 +85,24 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        //Fix random stroll goal for drying out mobs
-        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
-        this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(9, new BoPGoToWaterGoal(this, 1.2f));
-        this.goalSelector.addGoal(3, new PanicGoal(this, 1.25){
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 0.5f, true){
             @Override
             public boolean canUse() {
-                if(this.mob instanceof BoPCrab crab){
-                    if(crab.fightsBack){
-                        return false;
-                    }
+                if(!BoPCrab.this.fightsBack){
+                    return false;
+                }
+                return super.canUse();
+            }
+        });
+        //Fix random stroll goal for drying out mobs
+        this.goalSelector.addGoal(1, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 0.5f));
+        this.goalSelector.addGoal(9, new BoPGoToWaterGoal(this, 0.6f));
+        this.goalSelector.addGoal(3, new PanicGoal(this, 0.65){
+            @Override
+            public boolean canUse() {
+                if(BoPCrab.this.fightsBack){
+                    return false;
                 }
                 return super.canUse();
             }
@@ -102,10 +110,8 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this){
             @Override
             public boolean canUse() {
-                if(this.mob instanceof BoPFish fish){
-                    if(!fish.fightsBack){
-                        return false;
-                    }
+                if(!BoPCrab.this.fightsBack){
+                    return false;
                 }
                 return super.canUse();
             }
@@ -113,15 +119,29 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt){
             @Override
             public boolean canUse() {
-                if(this.mob instanceof BoPFish fish){
-                    if(!fish.fightsBack){
-                        return false;
-                    }
+                if(!BoPCrab.this.fightsBack){
+                    return false;
                 }
                 return super.canUse();
             }
         });
-        this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false));
+        this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false){
+            @Override
+            public boolean canUse() {
+                if(!BoPCrab.this.fightsBack){
+                    return false;
+                }
+                return super.canUse();
+            }
+        });
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if(!this.level().isClientSide){
+            System.out.println("Speed: " + this.getSpeed() + " Speed Modifier: " + this.moveControl.getSpeedModifier());
+        }
     }
 
     @Override
@@ -135,7 +155,7 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0)
-                .add(Attributes.MOVEMENT_SPEED, 1.2F)
+                .add(Attributes.MOVEMENT_SPEED, 0.5F)
                 .add(Attributes.ATTACK_DAMAGE, 3.0);
     }
 

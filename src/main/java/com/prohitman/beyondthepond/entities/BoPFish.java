@@ -17,6 +17,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -83,15 +84,30 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Player.class, 8.0F, 1.6, 1.4, EntitySelector.NO_SPECTATORS::test));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0, true){
+            @Override
+            public boolean canUse() {
+                if(!BoPFish.this.fightsBack){
+                    return false;
+                }
+                return super.canUse();
+            }
+        });
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Player.class, 8.0F, 1.6, 1.4, EntitySelector.NO_SPECTATORS::test){
+            @Override
+            public boolean canUse() {
+                if(BoPFish.this.fightsBack){
+                    return false;
+                }
+                return super.canUse();
+            }
+        });
         this.goalSelector.addGoal(4, new BoPFish.FishSwimGoal(this));
         this.goalSelector.addGoal(3, new PanicGoal(this, 1.25){
             @Override
             public boolean canUse() {
-                if(this.mob instanceof BoPFish fish){
-                    if(fish.fightsBack){
-                        return false;
-                    }
+                if(BoPFish.this.fightsBack){
+                    return false;
                 }
                 return super.canUse();
             }
@@ -118,7 +134,15 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
                 return super.canUse();
             }
         });
-        this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false));
+        this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false){
+            @Override
+            public boolean canUse() {
+                if(!BoPFish.this.fightsBack){
+                    return false;
+                }
+                return super.canUse();
+            }
+        });
     }
 
     @Override
@@ -166,6 +190,14 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if(this.getTarget() != null){
+            //System.out.println("Has target");
+        }
+    }
+
+    @Override
     public int getMaxHeadYRot() {
         return maxHeadRotation;
     }
@@ -184,9 +216,9 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
     }
 
     protected <E extends BoPFish> PlayState moveAnimController(final AnimationState<E> event) {
-        if (this.isInWaterOrBubble()){
+        if (this.isInWaterOrBubble() || !canFlop){
             event.setAndContinue(getSwimAnimation());
-        } else if(canFlop) {
+        } else {
             event.setAndContinue(getFlopAnimation());
         }
 

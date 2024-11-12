@@ -11,6 +11,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.apache.logging.log4j.core.appender.rolling.action.IfAll;
@@ -34,6 +35,36 @@ public class ModEntities {
                             )),
                     MobCategory.CREATURE).sized(0.5f, 0.5f).build("rainbow_trout"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> COOKIE_CUTTER_SHARK = ENTITIES.register("cookie_cutter_shark",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    5,
+                                    1,
+                                    2,
+                                    75,
+                                    false,
+                                    true,
+                                    true,
+                                    4,
+                                    false,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(0.25f, 0.15f).build("cookie_cutter_shark"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> SPOTTED_EAGLE_STINGRAY = ENTITIES.register("spotted_eagle_stingray",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    12,
+                                    1,
+                                    0,
+                                    20,
+                                    false,
+                                    false,
+                                    false,
+                                    5,
+                                    true,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(0.7f, 0.25f).build("spotted_eagle_stingray"));
     public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> SPINNER_DOLPHIN = ENTITIES.register("spinner_dolphin",
             () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
                             new BoPDolphin(pEntityType, pLevel,
@@ -97,6 +128,20 @@ public class ModEntities {
                             )),
                     MobCategory.CREATURE).sized(0.5f, 0.5f).build("giant_isopod"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPCrab>> COCONUT_CRAB = ENTITIES.register("coconut_crab",
+            () -> EntityType.Builder.<BoPCrab>of(((pEntityType, pLevel) ->
+                            new BoPCrab(pEntityType, pLevel,
+                                    20,
+                                    0.25,
+                                    6,
+                                    25,
+                                    2400,
+                                    true,
+                                    false,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(0.5f, 0.5f).build("coconut_crab"));
+
     public static final DeferredHolder<EntityType<?>, EntityType<BoPTurtle>> GREEN_SEA_TURTLE = ENTITIES.register("green_sea_turtle",
             () -> EntityType.Builder.<BoPTurtle>of(((pEntityType, pLevel) ->
                             new BoPTurtle(pEntityType, pLevel,
@@ -105,7 +150,7 @@ public class ModEntities {
                             )),
                     MobCategory.CREATURE).sized(1f, 0.75f).build("green_sea_turtle"));
     /**
-     * Add Scaling, then the rest of BoPDolphins, then Special Mobs,/ then the Rest of Mobs, then TrenchMonster, then items/buckets/drops, then recipes,/ then Marianas Trench biome, then Mob Spawns/
+     * Add Scaling, then the rest of BoPDolphins, then Special Mobs,/ then the Rest of Mobs, then Tweak each Mob, TrenchMonster/, then items/buckets/drops, then recipes,/ then Marianas Trench biome, then Mob Spawns/
      BoPFish (fightsBack?, maxHeadRotation?, isPosinous?, dealsDamage?, canFlop?, Bucketable?):
         -Channel Catfish
         -CuttleFish
