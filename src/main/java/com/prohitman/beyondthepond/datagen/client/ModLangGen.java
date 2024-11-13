@@ -34,6 +34,14 @@ public class ModLangGen extends LanguageProvider {
         addItem(ModItems.COOKIE_CUTTER_SHARK_SPAWN_EGG);
         addItem(ModItems.SPOTTED_EAGLE_STINGRAY_SPAWN_EGG);
         addItem(ModItems.COCONUT_CRAB_SPAWN_EGG);
+        addItem(ModItems.CHANNEL_CATFISH_SPAWN_EGG);
+        addItem(ModItems.CUTTLEFISH_SPAWN_EGG);
+        addItem(ModItems.LARGEMOUTH_BASS_SPAWN_EGG);
+        addItem(ModItems.LEMON_SHARK_SPAWN_EGG);
+        addItem(ModItems.LONGNOSE_GAR_SPAWN_EGG);
+        addItem(ModItems.NURSE_SHARK_SPAWN_EGG);
+        addItem(ModItems.SAILFISH_SPAWN_EGG);
+        addItem(ModItems.SUNFISH_SPAWN_EGG);
 
         //Entities
         addEntity(ModEntities.RAINBOW_TROUT);
@@ -46,6 +54,14 @@ public class ModLangGen extends LanguageProvider {
         addEntity(ModEntities.COOKIE_CUTTER_SHARK);
         addEntity(ModEntities.SPOTTED_EAGLE_STINGRAY);
         addEntity(ModEntities.COCONUT_CRAB);
+        addEntity(ModEntities.CHANNEL_CATFISH);
+        addEntity(ModEntities.CUTTLEFISH);
+        addEntity(ModEntities.LARGEMOUTH_BASS);
+        addEntity(ModEntities.LEMON_SHARK);
+        addEntity(ModEntities.LONGNOSE_GAR);
+        addEntity(ModEntities.NURSE_SHARK);
+        addEntity(ModEntities.SAILFISH);
+        addEntity(ModEntities.SUNFISH);
 
         add("itemGroup." + BeyondThePond.MODID, "Beyond The Pond");
     }

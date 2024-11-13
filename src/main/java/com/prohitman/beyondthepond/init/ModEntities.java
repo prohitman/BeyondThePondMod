@@ -1,10 +1,7 @@
 package com.prohitman.beyondthepond.init;
 
 import com.prohitman.beyondthepond.BeyondThePond;
-import com.prohitman.beyondthepond.entities.BoPCrab;
-import com.prohitman.beyondthepond.entities.BoPDolphin;
-import com.prohitman.beyondthepond.entities.BoPFish;
-import com.prohitman.beyondthepond.entities.BoPTurtle;
+import com.prohitman.beyondthepond.entities.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -31,9 +28,10 @@ public class ModEntities {
                             true,
                             3,
                             false,
+                            false,
                             false
                             )),
-                    MobCategory.CREATURE).sized(0.5f, 0.5f).build("rainbow_trout"));
+                    MobCategory.CREATURE).sized(0.45f, 0.3f).build("rainbow_trout"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> COOKIE_CUTTER_SHARK = ENTITIES.register("cookie_cutter_shark",
             () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
@@ -47,24 +45,142 @@ public class ModEntities {
                                     true,
                                     4,
                                     false,
-                                    false
+                                    false,
+                                    true
                             )),
-                    MobCategory.CREATURE).sized(0.25f, 0.15f).build("cookie_cutter_shark"));
+                    MobCategory.CREATURE).sized(0.35f, 0.15f).build("cookie_cutter_shark"));
     public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> SPOTTED_EAGLE_STINGRAY = ENTITIES.register("spotted_eagle_stingray",
             () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
                             new BoPFish(pEntityType, pLevel,
                                     12,
                                     1,
                                     0,
-                                    20,
+                                    5,
                                     false,
                                     false,
                                     false,
                                     5,
                                     true,
+                                    false,
                                     false
                             )),
-                    MobCategory.CREATURE).sized(0.7f, 0.25f).build("spotted_eagle_stingray"));
+                    MobCategory.CREATURE).sized(0.875f, 0.3f).build("spotted_eagle_stingray"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> CHANNEL_CATFISH = ENTITIES.register("channel_catfish",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    3,
+                                    1,
+                                    0,
+                                    75,
+                                    false,
+                                    false,
+                                    true,
+                                    3,
+                                    false,
+                                    false,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(0.35f, 0.225f).build("channel_catfish"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> CUTTLEFISH = ENTITIES.register("cuttlefish",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    8,
+                                    1,
+                                    0,
+                                    75,
+                                    false,
+                                    false,
+                                    false,
+                                    3,
+                                    false,
+                                    false,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(0.375f, 0.375f).build("cuttlefish"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> LARGEMOUTH_BASS = ENTITIES.register("largemouth_bass",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    3,
+                                    1,
+                                    0,
+                                    75,
+                                    false,
+                                    false,
+                                    true,
+                                    3,
+                                    false,
+                                    false,
+                                    true
+                            )),
+                    MobCategory.CREATURE).sized(0.45f, 0.275f).build("largemouth_bass"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> LEMON_SHARK = ENTITIES.register("lemon_shark",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    20,
+                                    1.05,
+                                    2.75,
+                                    1,
+                                    false,
+                                    true,
+                                    false,
+                                    5,
+                                    false,
+                                    true
+                            )),
+                    MobCategory.CREATURE).sized(1.15f, 0.6f).build("lemon_shark"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> LONGNOSE_GAR = ENTITIES.register("longnose_gar",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    3,
+                                    1,
+                                    0,
+                                    75,
+                                    false,
+                                    false,
+                                    true,
+                                    3,
+                                    false,
+                                    false,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(0.6f, 0.225f).build("longnose_gar"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> NURSE_SHARK = ENTITIES.register("nurse_shark",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    15,
+                                    1.1,
+                                    2,
+                                    40,
+                                    false,
+                                    true,
+                                    false,
+                                    5,
+                                    false,
+                                    false,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(1, 0.5f).build("nurse_shark"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> SAILFISH = ENTITIES.register("sailfish",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    12,
+                                    1.1,
+                                    2,
+                                    1,
+                                    false,
+                                    true,
+                                    false,
+                                    6,
+                                    true,
+                                    true,
+                                    0.7f,
+                                    1.25f
+                            )),
+                    MobCategory.CREATURE).sized(1.5f, 0.75f).build("sailfish"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> SUNFISH = ENTITIES.register("sunfish",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new SunFish(pEntityType, pLevel)),
+                    MobCategory.CREATURE).sized(0.75f, 1.75f).build("sunfish"));
     public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> SPINNER_DOLPHIN = ENTITIES.register("spinner_dolphin",
             () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
                             new BoPDolphin(pEntityType, pLevel,
@@ -152,35 +268,35 @@ public class ModEntities {
     /**
      * Add Scaling, then the rest of BoPDolphins, then Special Mobs,/ then the Rest of Mobs, then Tweak each Mob, TrenchMonster/, then items/buckets/drops, then recipes,/ then Marianas Trench biome, then Mob Spawns/
      BoPFish (fightsBack?, maxHeadRotation?, isPosinous?, dealsDamage?, canFlop?, Bucketable?):
-        -Channel Catfish
+        -Channel Catfish -B
         -CuttleFish
         -Cookie Cutter Shark
-        -LargemouthBass
+        -LargemouthBass -B
         -Lemon Shark
-        -Longnose Gar
+        -Longnose Gar -B
         -Nurse Shark
-        -Rainbow Trout
+        -Rainbow Trout -B
         -SailFish ??
         -StingRay
         -Sunfish??
-        -BlueRibbonEel
+        -BlueRibbonEel --> Needs Animation
      BoPDolphin (maxHeadRotation?¿, maxHealth?, maxSpeed?, hasIdle?, canBeLeashed?, maxAirSupply?):
         -Orca
-        -HumpBackWhale
+        -HumpBackWhale --> Needs Conversion (also displacement of body)
         -Manatee
-        -Spinner Dolphin
+        -Spinner Dolphin --> Needs Conversion
      BoPCrab (maxHeadRotation?, fightsBack?, prefersWater?, driesOutOfWater?):
-        -CoconutCrab
-        -European Lobster
-        -Giant Isopod
-        -Japanese Spider Crab
-        -Sally light foot Crab
-        -Tasmanian Crab
+        -CoconutCrab --> Needs Conversion
+        -European Lobster -->  Needs Conversion
+        -Giant Isopod --> Needs Conversion
+        -Japanese Spider Crab --> Needs Conversion
+        -Sally light foot Crab --> Needs Conversion
+        -Tasmanian Crab --> Needs Conversion
      BoPTurtle:
         -Green Sea Turtle
      BoPStoneFly
      BoPNymph
-     BoPPrawn??
-     BoPTrenchMonster
+     BoPPrawn?? --> Needs conversion
+     BoPTrenchMonster --> Needs Conversion/Texture Update
      */
 }

@@ -1,6 +1,9 @@
 package com.prohitman.beyondthepond.entities;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -31,6 +34,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -41,7 +45,9 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
+public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
+    private static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(BoPFish.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> BEACHED = SynchedEntityData.defineId(BoPFish.class, EntityDataSerializers.BOOLEAN);
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
     private static final Predicate<LivingEntity> SCARY_MOB = p_348288_ -> {
         if (p_348288_ instanceof Player player && player.isCreative()) {
@@ -67,8 +73,13 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
     public double attackDamage;
     public boolean isPoisonous;
     public boolean isDamaging;
+    public boolean hasIdle;
+    public boolean hasBite = false;
+    public boolean canBeBeached = false;
+    public float beachedWidth=0;
+    public float beachedHeight=0;
 
-    public BoPFish(EntityType<? extends AbstractFish> pEntityType, Level pLevel, double maxHealth, double maxSpeed, double attackDamage, int maxHeadRotation, boolean isBucketable, boolean fightsBack, boolean canFlop, int xp, boolean isPoisonous, boolean isDamaging) {
+    public BoPFish(EntityType<? extends AbstractBoPFish> pEntityType, Level pLevel, double maxHealth, double maxSpeed, double attackDamage, int maxHeadRotation, boolean isBucketable, boolean fightsBack, boolean canFlop, int xp, boolean isPoisonous, boolean isDamaging, boolean hasIdle) {
         super(pEntityType, pLevel);
         this.canFlop = canFlop;
         this.fightsBack = fightsBack;
@@ -80,6 +91,36 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
         this.attackDamage = attackDamage;
         this.isPoisonous = isPoisonous;
         this.isDamaging = isDamaging;
+        this.hasIdle = hasIdle;
+    }
+
+    public BoPFish(EntityType<? extends AbstractBoPFish> pEntityType, Level pLevel, double maxHealth, double maxSpeed, double attackDamage, int maxHeadRotation, boolean isBucketable, boolean fightsBack, boolean canFlop, int xp, boolean hasIdle, boolean hasBite) {
+        this(pEntityType, pLevel, maxHealth, maxSpeed, attackDamage, maxHeadRotation, isBucketable, fightsBack, canFlop, xp, false, false, hasIdle);
+        this.hasBite = hasBite;
+    }
+    public BoPFish(EntityType<? extends AbstractBoPFish> pEntityType, Level pLevel, double maxHealth, double maxSpeed, double attackDamage, int maxHeadRotation, boolean isBucketable, boolean fightsBack, boolean canFlop, int xp, boolean hasIdle, boolean canBeBeached, float beachedHeight, float beachedWidth){
+        this(pEntityType, pLevel, maxHealth, maxSpeed, attackDamage, maxHeadRotation, isBucketable, fightsBack, canFlop, xp, false, false, hasIdle);
+        this.canBeBeached = canBeBeached;
+        this.beachedHeight = beachedHeight;
+        this.beachedWidth = beachedWidth;
+    }
+
+    public boolean isAttacking(){
+        return this.entityData.get(ATTACKING);
+    }
+    public void setAttacking(boolean attacking){
+        this.entityData.set(ATTACKING, attacking);
+    }
+    public boolean isBeached(){
+        return this.entityData.get(BEACHED);
+    }
+    public void setBeached(boolean beached){
+        if(beached){
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0);
+        } else {
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(maxSpeed);
+        }
+        this.entityData.set(BEACHED, beached);
     }
 
     @Override
@@ -146,8 +187,50 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
     }
 
     @Override
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(ATTACKING, false);
+        pBuilder.define(BEACHED, false);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        super.onSyncedDataUpdated(pKey);
+        if(pKey.equals(BEACHED)){
+            this.refreshDimensions();
+        }
+    }
+
+    @Override
+    protected EntityDimensions getDefaultDimensions(Pose pPose) {
+        if(this.isBeached()){
+            return this.getType().getDimensions().scale(this.getAgeScale()).scale(beachedWidth, beachedHeight);
+        }
+        return super.getDefaultDimensions(pPose);
+    }
+
+    @Override
     public void aiStep() {
+        if(!canBeBeached){
+            if (!this.isInWater() && this.onGround() && this.verticalCollision) {
+                this.setDeltaMovement(
+                        this.getDeltaMovement()
+                                .add((double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F), 0.4F, (double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F))
+                );
+                this.setOnGround(false);
+                this.hasImpulse = true;
+                this.makeSound(this.getFlopSound());
+            }
+        }
         super.aiStep();
+        if(!this.level().isClientSide && this.canBeBeached){
+            if(!this.isBeached() && !this.isInWaterOrBubble()){
+                this.setBeached(true);
+            }
+            if(this.isBeached() && this.isInWaterOrBubble()){
+                this.setBeached(false);
+            }
+        }
         if(!this.level().isClientSide && this.fightsBack){
             this.updatePersistentAnger((ServerLevel)this.level(), true);
         }
@@ -157,7 +240,6 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
                 if (mob.isAlive()) {
                     this.touch(mob);
                 }
-
             }
         }
     }
@@ -192,8 +274,12 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
     @Override
     public void tick() {
         super.tick();
-        if(this.getTarget() != null){
-            //System.out.println("Has target");
+        if(!this.level().isClientSide){
+            if(!this.isAttacking() && this.getTarget() != null){
+                this.setAttacking(true);
+            } else if (this.isAttacking() && this.getTarget() == null) {
+                this.setAttacking(false);
+            }
         }
     }
 
@@ -209,6 +295,15 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
     public RawAnimation getFlopAnimation(){
         return RawAnimation.begin().thenLoop("flop");
     }
+    public RawAnimation getIdleAnimation(){
+        return RawAnimation.begin().thenLoop("idle");
+    }
+    public RawAnimation getBiteAnimation(){
+        return RawAnimation.begin().thenLoop("bite");
+    }
+    public RawAnimation getBeachedAnimation(){
+        return RawAnimation.begin().thenLoop("beached");
+    }
 
     @Override
     public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
@@ -216,10 +311,18 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
     }
 
     protected <E extends BoPFish> PlayState moveAnimController(final AnimationState<E> event) {
-        if (this.isInWaterOrBubble() || !canFlop){
+        if(canBeBeached && this.isBeached()){
+            event.setAndContinue(getBeachedAnimation());
+        } else if (hasBite && this.isAttacking()) {
+            event.setAndContinue(getBiteAnimation());
+        } else if ((this.isInWaterOrBubble() && !hasIdle) || (this.isInWaterOrBubble() && hasIdle && event.isMoving())){
             event.setAndContinue(getSwimAnimation());
-        } else {
+        } else if(canFlop && !this.isInWaterOrBubble()){
             event.setAndContinue(getFlopAnimation());
+        } else if(hasIdle && this.isInWaterOrBubble() && !event.isMoving()){
+            event.setAndContinue(getIdleAnimation());
+        } else {
+            event.setAndContinue(getSwimAnimation());
         }
 
         return PlayState.CONTINUE;
@@ -266,6 +369,10 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
         super.addAdditionalSaveData(pCompound);
         if(this.fightsBack){
             this.addPersistentAngerSaveData(pCompound);
+            pCompound.putBoolean("attacking", this.isAttacking());
+        }
+        if(canBeBeached){
+            pCompound.putBoolean("beached", this.isBeached());
         }
     }
 
@@ -277,6 +384,10 @@ public class BoPFish extends AbstractFish implements GeoEntity, NeutralMob {
         super.readAdditionalSaveData(pCompound);
         if(this.fightsBack){
             this.readPersistentAngerSaveData(this.level(), pCompound);
+            this.setAttacking(pCompound.getBoolean("attacking"));
+        }
+        if(canBeBeached){
+            this.setBeached(pCompound.getBoolean("beached"));
         }
     }
 

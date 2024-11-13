@@ -59,13 +59,14 @@
 		},
 		"flop": {
 			"loop": true,
+			"animation_length": 2.4583,
 			"bones": {
 				"bone": {
 					"rotation": {
 						"vector": [0, 0, -90]
 					},
 					"position": {
-						"vector": [-1, -0.25, 0]
+						"vector": [-1, -1.25, 0]
 					}
 				},
 				"bone2": {
@@ -100,7 +101,7 @@
 				}
 			}
 		},
-		"Idle": {
+		"idle": {
 			"loop": true,
 			"bones": {
 				"bone": {

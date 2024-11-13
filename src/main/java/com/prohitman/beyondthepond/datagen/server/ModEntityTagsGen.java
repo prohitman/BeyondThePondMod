@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -33,6 +34,14 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.HUMPBACK_WHALE.get())
                 .add(ModEntities.ORCA.get());
         this.tag(EntityTypeTags.AQUATIC)
+                .add(ModEntities.SUNFISH.get())
+                .add(ModEntities.SAILFISH.get())
+                .add(ModEntities.NURSE_SHARK.get())
+                .add(ModEntities.LONGNOSE_GAR.get())
+                .add(ModEntities.LEMON_SHARK.get())
+                .add(ModEntities.LARGEMOUTH_BASS.get())
+                .add(ModEntities.CUTTLEFISH.get())
+                .add(ModEntities.CHANNEL_CATFISH.get())
                 .add(ModEntities.COCONUT_CRAB.get())
                 .add(ModEntities.COOKIE_CUTTER_SHARK.get())
                 .add(ModEntities.SPOTTED_EAGLE_STINGRAY.get())
@@ -41,6 +50,14 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.GREEN_SEA_TURTLE.get())
                 .add(ModEntities.SPINNER_DOLPHIN.get());
         this.tag(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH)
+                .add(ModEntities.SUNFISH.get())
+                .add(ModEntities.SAILFISH.get())
+                .add(ModEntities.NURSE_SHARK.get())
+                .add(ModEntities.LONGNOSE_GAR.get())
+                .add(ModEntities.LEMON_SHARK.get())
+                .add(ModEntities.LARGEMOUTH_BASS.get())
+                .add(ModEntities.CUTTLEFISH.get())
+                .add(ModEntities.CHANNEL_CATFISH.get())
                 .add(ModEntities.COCONUT_CRAB.get())
                 .add(ModEntities.COOKIE_CUTTER_SHARK.get())
                 .add(ModEntities.SPOTTED_EAGLE_STINGRAY.get())
@@ -52,6 +69,14 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.GREEN_SEA_TURTLE.get())
                 .add(ModEntities.SPINNER_DOLPHIN.get());
         this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
+                .add(ModEntities.SUNFISH.get())
+                .add(ModEntities.SAILFISH.get())
+                .add(ModEntities.NURSE_SHARK.get())
+                .add(ModEntities.LONGNOSE_GAR.get())
+                .add(ModEntities.LEMON_SHARK.get())
+                .add(ModEntities.LARGEMOUTH_BASS.get())
+                .add(ModEntities.CUTTLEFISH.get())
+                .add(ModEntities.CHANNEL_CATFISH.get())
                 .add(ModEntities.SPOTTED_EAGLE_STINGRAY.get())
                 .add(ModEntities.COOKIE_CUTTER_SHARK.get())
                 .add(ModEntities.ORCA.get())

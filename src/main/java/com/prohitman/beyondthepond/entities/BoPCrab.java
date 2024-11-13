@@ -140,7 +140,7 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
     public void tick() {
         super.tick();
         if(!this.level().isClientSide){
-            System.out.println("Speed: " + this.getSpeed() + " Speed Modifier: " + this.moveControl.getSpeedModifier());
+            //System.out.println("Speed: " + this.getSpeed() + " Speed Modifier: " + this.moveControl.getSpeedModifier());
         }
     }
 

@@ -1,0 +1,119 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"swim": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time * 360-30) * 3", 0]
+					}
+				},
+				"bone3": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time * 720-60) * 10", 0]
+					}
+				},
+				"bone4": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 360-60) * -2", "math.cos(query.anim_time * 360-60) * -2", "math.cos(query.anim_time * 360-60) * -3"]
+					}
+				},
+				"bone5": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time * 360-60) * -2", "-(math.cos(query.anim_time * 360-60) * -2)", "-(math.cos(query.anim_time * 360-60) * -3)"]
+					}
+				},
+				"bone6": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time * 360) * -3", 0]
+					}
+				},
+				"bone8": {
+					"rotation": {
+						"vector": [-0.43784, "27.5504+math.cos(query.anim_time * 360-30) * -4", 14.79258]
+					}
+				},
+				"bone9": {
+					"rotation": {
+						"vector": [-0.43784, "-27.5504+math.cos(query.anim_time * 360-30) * -4", -14.79258]
+					}
+				}
+			}
+		},
+		"beached": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"rotation": {
+						"vector": [10, 0, -90]
+					},
+					"position": {
+						"vector": [-8, -18, -1]
+					}
+				},
+				"bone3": {
+					"rotation": {
+						"vector": [0, -20, 0]
+					}
+				},
+				"bone4": {
+					"rotation": {
+						"vector": [0, 0, -7.5]
+					}
+				},
+				"bone5": {
+					"rotation": {
+						"vector": [0, 0, 7.5]
+					}
+				},
+				"bone7": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time * 720) * 6", 0, 0]
+					}
+				},
+				"bone8": {
+					"rotation": {
+						"vector": [0, -7.5, 0]
+					}
+				}
+			}
+		},
+		"idle": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time * 180-30) * 0.3", 0]
+					}
+				},
+				"bone4": {
+					"rotation": {
+						"vector": [0, 0, "math.sin(query.anim_time * 180) * 2"]
+					}
+				},
+				"bone5": {
+					"rotation": {
+						"vector": [0, 0, "-(math.sin(query.anim_time * 180) * 2)"]
+					}
+				},
+				"bone6": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time * 360-30) * 0.3", 0]
+					}
+				},
+				"bone8": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time * 180) * 5", 0]
+					}
+				},
+				"bone9": {
+					"rotation": {
+						"vector": [0, "-(math.sin(query.anim_time * 180) * 5)", 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

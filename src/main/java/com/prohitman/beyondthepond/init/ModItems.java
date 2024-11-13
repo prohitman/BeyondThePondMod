@@ -15,11 +15,27 @@ public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(BeyondThePond.MODID);
 
     public static final DeferredItem<Item> RAINBOW_TROUT_SPAWN_EGG = ITEMS.register("rainbow_trout_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.RAINBOW_TROUT, 0x74a3af, 0xcdc9df, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(ModEntities.RAINBOW_TROUT, 0x67723A, 0x19260A, new Item.Properties()));
     public static final DeferredItem<Item> COOKIE_CUTTER_SHARK_SPAWN_EGG = ITEMS.register("cookie_cutter_shark_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.COOKIE_CUTTER_SHARK, 0x74a3af, 0xcdc9df, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(ModEntities.COOKIE_CUTTER_SHARK, 0x483B2F, 0xB1977E, new Item.Properties()));
     public static final DeferredItem<Item> SPOTTED_EAGLE_STINGRAY_SPAWN_EGG = ITEMS.register("spotted_eagle_stingray_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.SPOTTED_EAGLE_STINGRAY, 0x74a3af, 0xcdc9df, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(ModEntities.SPOTTED_EAGLE_STINGRAY, 0x1C1B21, 0xB8B5C5, new Item.Properties()));
+    public static final DeferredItem<Item> CHANNEL_CATFISH_SPAWN_EGG = ITEMS.register("channel_catfish_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CHANNEL_CATFISH, 0x454C39, 0x81823C, new Item.Properties()));
+    public static final DeferredItem<Item> CUTTLEFISH_SPAWN_EGG = ITEMS.register("cuttlefish_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CUTTLEFISH, 0x581019, 0x9E2B3A, new Item.Properties()));
+    public static final DeferredItem<Item> LARGEMOUTH_BASS_SPAWN_EGG = ITEMS.register("largemouth_bass_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.LARGEMOUTH_BASS, 0x646A21, 0xD9DCCB, new Item.Properties()));
+    public static final DeferredItem<Item> LEMON_SHARK_SPAWN_EGG = ITEMS.register("lemon_shark_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.LEMON_SHARK, 0xD9C261, 0xAB5C0E, new Item.Properties()));
+    public static final DeferredItem<Item> LONGNOSE_GAR_SPAWN_EGG = ITEMS.register("longnose_gar_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.LONGNOSE_GAR, 0x695737, 0x995218, new Item.Properties()));
+    public static final DeferredItem<Item> NURSE_SHARK_SPAWN_EGG = ITEMS.register("nurse_shark_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.NURSE_SHARK, 0x876843, 0x876843, new Item.Properties()));
+    public static final DeferredItem<Item> SAILFISH_SPAWN_EGG = ITEMS.register("sailfish_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.SAILFISH, 0x10305B, 0xE0B75F, new Item.Properties()));
+    public static final DeferredItem<Item> SUNFISH_SPAWN_EGG = ITEMS.register("sunfish_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.SUNFISH, 0xEDEFF2, 0xA7B1BE, new Item.Properties()));
     public static final DeferredItem<Item> SPINNER_DOLPHIN_SPAWN_EGG = ITEMS.register("spinner_dolphin_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.SPINNER_DOLPHIN, 0x74a3af, 0xcdc9df, new Item.Properties()));
 
