@@ -10,12 +10,12 @@ import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
-public class BoPDolphinModel extends DefaultedEntityGeoModel<BoPDolphin> {
-    public BoPDolphinModel(ResourceLocation assetSubpath) {
-        super(assetSubpath);
+public class BoPDolphinModel<T extends BoPDolphin> extends DefaultedEntityGeoModel<T> {
+    public BoPDolphinModel(ResourceLocation assetSubpath, boolean turnsHead) {
+        super(assetSubpath, turnsHead);
     }
     @Override
-    public void setCustomAnimations(BoPDolphin animatable, long instanceId, AnimationState<BoPDolphin> animationState) {
+    public void setCustomAnimations(T animatable, long instanceId, AnimationState<T> animationState) {
         GeoBone body = getAnimationProcessor().getBone("body");
         GeoBone tail = getAnimationProcessor().getBone("tail");
         GeoBone tailFin = getAnimationProcessor().getBone("tailFin");

@@ -271,6 +271,7 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
         this.setHealth(this.getMaxHealth());
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(attackDamage);
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(maxSpeed);
+        this.setMaxRotation(maxHeadRotation);
 
         return super.finalizeSpawn(pLevel, pDifficulty, pSpawnType, pSpawnGroupData);
     }

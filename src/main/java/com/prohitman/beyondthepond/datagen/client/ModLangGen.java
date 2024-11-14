@@ -42,6 +42,7 @@ public class ModLangGen extends LanguageProvider {
         addItem(ModItems.NURSE_SHARK_SPAWN_EGG);
         addItem(ModItems.SAILFISH_SPAWN_EGG);
         addItem(ModItems.SUNFISH_SPAWN_EGG);
+        addItem(ModItems.GIANT_TIGER_PRAWN_SPAWN_EGG);
 
         //Entities
         addEntity(ModEntities.RAINBOW_TROUT);
@@ -62,6 +63,7 @@ public class ModLangGen extends LanguageProvider {
         addEntity(ModEntities.NURSE_SHARK);
         addEntity(ModEntities.SAILFISH);
         addEntity(ModEntities.SUNFISH);
+        addEntity(ModEntities.GIANT_TIGER_PRAWN);
 
         add("itemGroup." + BeyondThePond.MODID, "Beyond The Pond");
     }

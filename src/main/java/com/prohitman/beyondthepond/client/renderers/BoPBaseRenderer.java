@@ -4,7 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.prohitman.beyondthepond.BeyondThePond;
 import com.prohitman.beyondthepond.client.models.BoPBaseModel;
+import com.prohitman.beyondthepond.client.models.BoPDolphinModel;
 import com.prohitman.beyondthepond.datagen.server.ModEntityTagsGen;
+import com.prohitman.beyondthepond.entities.BoPDolphin;
 import com.prohitman.beyondthepond.entities.BoPTurtle;
 import com.prohitman.beyondthepond.init.ModEntities;
 import net.minecraft.client.model.ChickenModel;
@@ -56,9 +58,9 @@ public class BoPBaseRenderer<T extends LivingEntity & GeoEntity> extends GeoEnti
                 float f1 = 1.0F / 6;
                 poseStack.scale(f1, f1, f1);
             }
-            if(animatable.getType() == ModEntities.HUMPBACK_WHALE.get()){
+/*            if(animatable.getType() == ModEntities.HUMPBACK_WHALE.get()){
                 poseStack.translate(0, -3, 0);
-            }
+            }*/
         }
 
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);

@@ -36,6 +36,8 @@ public class ModItems {
             () -> new DeferredSpawnEggItem(ModEntities.SAILFISH, 0x10305B, 0xE0B75F, new Item.Properties()));
     public static final DeferredItem<Item> SUNFISH_SPAWN_EGG = ITEMS.register("sunfish_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.SUNFISH, 0xEDEFF2, 0xA7B1BE, new Item.Properties()));
+    public static final DeferredItem<Item> GIANT_TIGER_PRAWN_SPAWN_EGG = ITEMS.register("giant_tiger_prawn_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.GIANT_TIGER_PRAWN, 0x493421, 0xE5D482, new Item.Properties()));
     public static final DeferredItem<Item> SPINNER_DOLPHIN_SPAWN_EGG = ITEMS.register("spinner_dolphin_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.SPINNER_DOLPHIN, 0x74a3af, 0xcdc9df, new Item.Properties()));
 

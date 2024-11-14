@@ -34,6 +34,7 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.HUMPBACK_WHALE.get())
                 .add(ModEntities.ORCA.get());
         this.tag(EntityTypeTags.AQUATIC)
+                .add(ModEntities.GIANT_TIGER_PRAWN.get())
                 .add(ModEntities.SUNFISH.get())
                 .add(ModEntities.SAILFISH.get())
                 .add(ModEntities.NURSE_SHARK.get())
@@ -50,6 +51,7 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.GREEN_SEA_TURTLE.get())
                 .add(ModEntities.SPINNER_DOLPHIN.get());
         this.tag(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH)
+                .add(ModEntities.GIANT_TIGER_PRAWN.get())
                 .add(ModEntities.SUNFISH.get())
                 .add(ModEntities.SAILFISH.get())
                 .add(ModEntities.NURSE_SHARK.get())
@@ -69,6 +71,7 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.GREEN_SEA_TURTLE.get())
                 .add(ModEntities.SPINNER_DOLPHIN.get());
         this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
+                .add(ModEntities.GIANT_TIGER_PRAWN.get())
                 .add(ModEntities.SUNFISH.get())
                 .add(ModEntities.SAILFISH.get())
                 .add(ModEntities.NURSE_SHARK.get())

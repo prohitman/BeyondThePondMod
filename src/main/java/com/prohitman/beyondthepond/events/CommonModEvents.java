@@ -30,6 +30,7 @@ public class CommonModEvents {
         event.put(ModEntities.NURSE_SHARK.get(), BoPFish.createAttributes().build());
         event.put(ModEntities.SAILFISH.get(), BoPFish.createAttributes().build());
         event.put(ModEntities.SUNFISH.get(), BoPFish.createAttributes().build());
+        event.put(ModEntities.GIANT_TIGER_PRAWN.get(), BoPFish.createAttributes().build());
 
         event.put(ModEntities.SPINNER_DOLPHIN.get(), BoPDolphin.createAttributes().build());
         event.put(ModEntities.MANATEE.get(), BoPDolphin.createAttributes().build());

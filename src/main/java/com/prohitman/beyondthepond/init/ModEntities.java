@@ -178,8 +178,38 @@ public class ModEntities {
                             )),
                     MobCategory.CREATURE).sized(1.5f, 0.75f).build("sailfish"));
     public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> SUNFISH = ENTITIES.register("sunfish",
-            () -> EntityType.Builder.<BoPFish>of((SunFish::new),
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    18,
+                                    0.7,
+                                    0,
+                                    1,
+                                    false,
+                                    false,
+                                    false,
+                                    5,
+                                    true,
+                                    true,
+                                    0.25f,
+                                    1.75f
+                            )),
                     MobCategory.CREATURE).sized(1.575f, 1.8f).build("sunfish"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> GIANT_TIGER_PRAWN = ENTITIES.register("giant_tiger_prawn",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    3,
+                                    1.2,
+                                    0,
+                                    90,
+                                    false,
+                                    false,
+                                    false,
+                                    3,
+                                    false,
+                                    false,
+                                    true
+                            )),
+                    MobCategory.CREATURE).sized(0.35f, 0.35f).build("giant_tiger_prawn"));
     public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> SPINNER_DOLPHIN = ENTITIES.register("spinner_dolphin",
             () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
                             new BoPDolphin(pEntityType, pLevel,
@@ -295,7 +325,7 @@ public class ModEntities {
         -Green Sea Turtle
      BoPStoneFly
      BoPNymph
-     BoPPrawn?? --> Needs conversion
+     BoPPrawn?? --> Needs conversion, Missing Flopped or Beached
      BoPTrenchMonster --> Needs Conversion/Texture Update
      */
 }
