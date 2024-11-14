@@ -1,5 +1,6 @@
 package com.prohitman.beyondthepond.entities;
 
+import com.prohitman.beyondthepond.entities.goals.BoPPanicGoal;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -48,6 +49,7 @@ import java.util.function.Predicate;
 public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
     private static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(BoPFish.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> BEACHED = SynchedEntityData.defineId(BoPFish.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> PANICKING = SynchedEntityData.defineId(BoPFish.class, EntityDataSerializers.BOOLEAN);
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
     private static final Predicate<LivingEntity> SCARY_MOB = p_348288_ -> {
         if (p_348288_ instanceof Player player && player.isCreative()) {
@@ -109,6 +111,7 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
         return this.entityData.get(ATTACKING);
     }
     public void setAttacking(boolean attacking){
+        updateRotation(attacking);
         this.entityData.set(ATTACKING, attacking);
     }
     public boolean isBeached(){
@@ -121,6 +124,13 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
             this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(maxSpeed);
         }
         this.entityData.set(BEACHED, beached);
+    }
+    public boolean isPanicked(){
+        return this.entityData.get(PANICKING);
+    }
+    public void setPanicked(boolean panicked){
+        updateRotation(panicked);
+        this.entityData.set(PANICKING, panicked);
     }
 
     @Override
@@ -144,15 +154,7 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
             }
         });
         this.goalSelector.addGoal(4, new BoPFish.FishSwimGoal(this));
-        this.goalSelector.addGoal(3, new PanicGoal(this, 1.25){
-            @Override
-            public boolean canUse() {
-                if(BoPFish.this.fightsBack){
-                    return false;
-                }
-                return super.canUse();
-            }
-        });
+        this.goalSelector.addGoal(3, new BoPPanicGoal(this, 1.25));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this){
             @Override
             public boolean canUse() {
@@ -191,6 +193,7 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
         super.defineSynchedData(pBuilder);
         pBuilder.define(ATTACKING, false);
         pBuilder.define(BEACHED, false);
+        pBuilder.define(PANICKING, false);
     }
 
     @Override
@@ -207,6 +210,14 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
             return this.getType().getDimensions().scale(this.getAgeScale()).scale(beachedWidth, beachedHeight);
         }
         return super.getDefaultDimensions(pPose);
+    }
+
+    public void updateRotation(boolean rotation){
+        if(rotation){
+            this.setMaxRotation(90);
+        } else {
+            this.setMaxRotation(maxHeadRotation);
+        }
     }
 
     @Override
@@ -291,7 +302,6 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
     public RawAnimation getSwimAnimation(){
         return RawAnimation.begin().thenLoop("swim");
     }
-
     public RawAnimation getFlopAnimation(){
         return RawAnimation.begin().thenLoop("flop");
     }
@@ -370,6 +380,8 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
         if(this.fightsBack){
             this.addPersistentAngerSaveData(pCompound);
             pCompound.putBoolean("attacking", this.isAttacking());
+        } else {
+            pCompound.putBoolean("panicked", this.isPanicked());
         }
         if(canBeBeached){
             pCompound.putBoolean("beached", this.isBeached());
@@ -385,6 +397,8 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
         if(this.fightsBack){
             this.readPersistentAngerSaveData(this.level(), pCompound);
             this.setAttacking(pCompound.getBoolean("attacking"));
+        } else {
+            this.setPanicked(pCompound.getBoolean("panicked"));
         }
         if(canBeBeached){
             this.setBeached(pCompound.getBoolean("beached"));

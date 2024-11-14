@@ -34,10 +34,17 @@ import net.minecraft.world.phys.Vec3;
 
 public abstract class AbstractBoPFish extends WaterAnimal implements Bucketable {
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(AbstractBoPFish.class, EntityDataSerializers.BOOLEAN);
-
+    public float maxRotation = 90;
     public AbstractBoPFish(EntityType<? extends AbstractBoPFish> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.moveControl = new AbstractBoPFish.FishMoveControl(this);
+    }
+
+    public float getMaxRotation(){
+        return maxRotation;
+    }
+    public void setMaxRotation(float maxRotation){
+        this.maxRotation = maxRotation;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -79,6 +86,7 @@ public abstract class AbstractBoPFish extends WaterAnimal implements Bucketable 
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putBoolean("FromBucket", this.fromBucket());
+        pCompound.putFloat("maxRotation", maxRotation);
     }
 
     /**
@@ -88,6 +96,7 @@ public abstract class AbstractBoPFish extends WaterAnimal implements Bucketable 
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         this.setFromBucket(pCompound.getBoolean("FromBucket"));
+        this.setMaxRotation(pCompound.getFloat("maxRotation"));
     }
 
     @Override
@@ -179,7 +188,7 @@ public abstract class AbstractBoPFish extends WaterAnimal implements Bucketable 
 
                 if (d0 != 0.0 || d2 != 0.0) {
                     float f1 = (float)(Mth.atan2(d2, d0) * 180.0F / (float)Math.PI) - 90.0F;
-                    this.fish.setYRot(this.rotlerp(this.fish.getYRot(), f1, 90.0F));
+                    this.fish.setYRot(this.rotlerp(this.fish.getYRot(), f1, fish.maxRotation));
                     this.fish.yBodyRot = this.fish.getYRot();
                 }
             } else {
