@@ -45,7 +45,7 @@ public class ClientModEvents {
             registerRenderers(ModEntities.SUNFISH.get(), "sunfish", false, false, 0, 0.7f);
             registerRenderers(ModEntities.GIANT_TIGER_PRAWN.get(), "giant_tiger_prawn", false, false, 0, 0.1f);
 
-            registerDolphinRenderers(ModEntities.SPINNER_DOLPHIN.get(), "spinner_dolphin", false, true, 1, 1);
+            registerDolphinRenderers(ModEntities.SPINNER_DOLPHIN.get(), "spinner_dolphin", false, true, 1, 0.5f);
             registerDolphinRenderers(ModEntities.MANATEE.get(), "manatee", false, true, 1, 1);
             registerDolphinRenderers(ModEntities.ORCA.get(), "orca", false, true, 1.5f, 1.5f);
             registerDolphinRenderers(ModEntities.HUMPBACK_WHALE.get(), "humpback_whale", false, true, 2, 3);

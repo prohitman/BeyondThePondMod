@@ -218,52 +218,56 @@ public class ModEntities {
                                     4800,
                                     2400,
                                     false,
-                                    true
-                            )),
-                    MobCategory.CREATURE).sized(1.2f, 1).build("spinner_dolphin"));
-
-    public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> ORCA = ENTITIES.register("orca",
-            () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
-                            new BoPDolphin(pEntityType, pLevel,
-                                    50,
-                                    1.2,
-                                    7800,
-                                    3000,
                                     true,
-                                    false
+                                    85,
+                                    10,
+                                    false,
+                                    0.01f
                             )),
-                    MobCategory.CREATURE).sized(2.75f, 2.5f).build("orca"));
+                    MobCategory.CREATURE).sized(0.75f, 0.6f).eyeHeight(0.3f).build("spinner_dolphin"));
+//New Path navigator needed for stuck detection
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPOrca>> ORCA = ENTITIES.register("orca",
+            () -> EntityType.Builder.of((BoPOrca::new),
+                    MobCategory.CREATURE).sized(3.3f, 2.5f).eyeHeight(1.5f).build("orca"));
 
     //Fix Later
     public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> HUMPBACK_WHALE = ENTITIES.register("humpback_whale",
             () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
                             new BoPDolphin(pEntityType, pLevel,
                                     200,
-                                    1,
+                                    0.65f,
                                     10000,
                                     8000,
                                     false,
-                                    false
+                                    false,
+                                    1,
+                                    1,
+                                    true,
+                                    0.008f
                             )),
-                    MobCategory.CREATURE).sized(8f, 6f).build("humpback_whale"));
+                    MobCategory.CREATURE).sized(8f, 5f).eyeHeight(4f).build("humpback_whale"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> MANATEE = ENTITIES.register("manatee",
             () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
                             new BoPDolphin(pEntityType, pLevel,
                                     40,
-                                    0.5f,
+                                    0.3f,
                                     4000,
                                     5000,
                                     true,
-                                    true
+                                    true,
+                                    5,
+                                    5,
+                                    false,
+                                    0.08f
                             )),
-                    MobCategory.CREATURE).sized(2.2f, 1.85f).build("manatee"));
+                    MobCategory.CREATURE).sized(1.5f, 1f).eyeHeight(0.5f).build("manatee"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<BoPCrab>> GIANT_ISOPOD = ENTITIES.register("giant_isopod",
             () -> EntityType.Builder.<BoPCrab>of(((pEntityType, pLevel) ->
                             new BoPCrab(pEntityType, pLevel,
                                     6,
-                                    0.75,
+                                    0.2,
                                     0,
                                     25,
                                     2400,
@@ -277,7 +281,7 @@ public class ModEntities {
             () -> EntityType.Builder.<BoPCrab>of(((pEntityType, pLevel) ->
                             new BoPCrab(pEntityType, pLevel,
                                     20,
-                                    0.25,
+                                    0.15,
                                     6,
                                     25,
                                     2400,
@@ -296,6 +300,7 @@ public class ModEntities {
                     MobCategory.CREATURE).sized(1f, 0.75f).build("green_sea_turtle"));
     /**
      * Add Scaling, then the rest of BoPDolphins, then Special Mobs,/ then the Rest of Mobs, then Tweak each Mob, TrenchMonster/, then items/buckets/drops, then recipes,/ then Marianas Trench biome, then Mob Spawns/
+     Need configurable eye heights for all mobs
      BoPFish (fightsBack?, maxHeadRotation?, isPosinous?, dealsDamage?, canFlop?, Bucketable?):
         -Channel Catfish -B
         -CuttleFish
@@ -310,6 +315,7 @@ public class ModEntities {
         -Sunfish??
         -BlueRibbonEel --> Needs Animation
      BoPDolphin (maxHeadRotation?¿, maxHealth?, maxSpeed?, hasIdle?, canBeLeashed?, maxAirSupply?):
+     Add Beached behaviour, Replicate maxRotation Behaviour, investiaate large bounding boxes bugs (HumpBack Whale)
         -Orca
         -HumpBackWhale --> Needs Conversion (also displacement of body)
         -Manatee

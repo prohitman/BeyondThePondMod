@@ -1,7 +1,9 @@
 package com.prohitman.beyondthepond.entities;
 
 import com.prohitman.beyondthepond.entities.goals.BoPJumpGoal;
+import com.prohitman.beyondthepond.entities.goals.BoPWaterBoundPathNavigation;
 import com.prohitman.beyondthepond.init.ModEntities;
+import com.sun.source.doctree.AttributeTree;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -25,6 +27,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
@@ -37,6 +40,7 @@ import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Guardian;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -61,6 +65,9 @@ import java.util.function.Predicate;
 public class BoPDolphin extends WaterAnimal implements GeoEntity {
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(BoPDolphin.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(BoPDolphin.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> BEACHED = SynchedEntityData.defineId(BoPDolphin.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> PANICKING = SynchedEntityData.defineId(BoPDolphin.class, EntityDataSerializers.BOOLEAN);
     static final TargetingConditions SWIM_WITH_PLAYER_TARGETING = TargetingConditions.forNonCombat().range(10.0).ignoreLineOfSight();
     public static final Predicate<ItemEntity> ALLOWED_ITEMS = p_350083_ -> !p_350083_.hasPickUpDelay() && p_350083_.isAlive() && p_350083_.isInWater();
 
@@ -70,12 +77,13 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
     public double maxSpeed;
     public int maxAirSupply;
     public int maxMoistnessLevel;
+    public float maxRotation=90;
+    public float maxHeadRotation;
 
-    public BoPDolphin(EntityType<? extends BoPDolphin> pEntityType, Level pLevel, double maxHealth, double maxSpeed, int maxAirSupply, int maxMoistnessLevel, boolean canIdle, boolean canBeLeashed) {
+    public BoPDolphin(EntityType<? extends BoPDolphin> pEntityType, Level pLevel, double maxHealth, double maxSpeed, int maxAirSupply, int maxMoistnessLevel, boolean canIdle, boolean canBeLeashed, int maxTurnX, int maxTurnY, boolean noCulling, float inWaterSpeed) {
         super(pEntityType, pLevel);
-        boolean isWhale = pEntityType == ModEntities.HUMPBACK_WHALE.get();
-        this.moveControl = new SmoothSwimmingMoveControl(this, isWhale ? 4 : 85, isWhale ? 5 : 10, 0.01F, 0.05F, true);
-        this.lookControl = new SmoothSwimmingLookControl(this, isWhale ? 3 : 10);
+        this.moveControl = pEntityType == ModEntities.HUMPBACK_WHALE.get() ? new AnimalSwimMoveControllerSink(this, 1,1, 3) : new SmoothSwimmingMoveControl(this, maxTurnX, maxTurnY, inWaterSpeed, 0.05F, true);
+        this.lookControl = new SmoothSwimmingLookControl(this, 10);
         this.setCanPickUpLoot(true);
         this.maxAirSupply = maxAirSupply;
         this.maxHealth = maxHealth;
@@ -83,6 +91,15 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
         this.canIdle = canIdle;
         this.canBeLeashed = canBeLeashed;
         this.maxMoistnessLevel = maxMoistnessLevel;
+        this.noCulling = noCulling;
+    }
+
+    @Override
+    public float maxUpStep() {
+        if(this.getType() == ModEntities.HUMPBACK_WHALE.get()){
+            return 1.25f;
+        }
+        return super.maxUpStep();
     }
 
     @Nullable
@@ -93,6 +110,7 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
         this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
         this.setHealth(this.getMaxHealth());
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(maxSpeed);
+        this.setMoisntessLevel(maxMoistnessLevel);
         return super.finalizeSpawn(pLevel, pDifficulty, pSpawnType, pSpawnGroupData);
     }
 
@@ -100,6 +118,24 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
     protected void handleAirSupply(int pAirSupply) {
     }
 
+    public boolean isPanicked(){
+        return this.entityData.get(PANICKING);
+    }
+    public void setPanicked(boolean panicked){
+        updateRotation(panicked);
+        this.entityData.set(PANICKING, panicked);
+    }
+    public boolean isBeached(){
+        return this.entityData.get(BEACHED);
+    }
+    public void setBeached(boolean beached){
+        if(beached){
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0);
+        } else {
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(maxSpeed);
+        }
+        this.entityData.set(BEACHED, beached);
+    }
     public int getMoistnessLevel() {
         return this.entityData.get(MOISTNESS_LEVEL);
     }
@@ -107,17 +143,35 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
     public void setMoisntessLevel(int pMoistnessLevel) {
         this.entityData.set(MOISTNESS_LEVEL, pMoistnessLevel);
     }
+    public void updateRotation(boolean rotation){
+        if(rotation){
+            this.setMaxRotation(90);
+        } else {
+            this.setMaxRotation(maxHeadRotation);
+        }
+    }
+
+    public float getMaxRotation(){
+        return maxRotation;
+    }
+    public void setMaxRotation(float maxRotation){
+        this.maxRotation = maxRotation;
+    }
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(MOISTNESS_LEVEL, maxMoistnessLevel);
+        pBuilder.define(BEACHED, false);
+        pBuilder.define(PANICKING, false);
+        pBuilder.define(ATTACKING, false);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("Moistness", this.getMoistnessLevel());
+        pCompound.putBoolean("beached", this.isBeached());
     }
 
     /**
@@ -127,6 +181,7 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         this.setMoisntessLevel(pCompound.getInt("Moistness"));
+        this.setBeached(pCompound.getBoolean("beached"));
     }
 
     @Override
@@ -136,8 +191,24 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
         //this.goalSelector.addGoal(1, new Dolphin.DolphinSwimToTreasureGoal(this));
         //this.goalSelector.addGoal(2, new Dolphin.DolphinSwimWithPlayerGoal(this, 4.0));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0, 10));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this){
+            @Override
+            public boolean canUse() {
+                if(BoPDolphin.this.isBeached()){
+                    return false;
+                }
+                return super.canUse();
+            }
+        });
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F){
+            @Override
+            public boolean canUse() {
+                if(BoPDolphin.this.isBeached()){
+                    return false;
+                }
+                return super.canUse();
+            }
+        });
         this.goalSelector.addGoal(5, new BoPJumpGoal(this, 10));
         this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2F, true));
         //this.goalSelector.addGoal(8, new Dolphin.PlayWithItemsGoal());
@@ -150,12 +221,13 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0)
                 .add(Attributes.MOVEMENT_SPEED, 1.2F)
-                .add(Attributes.ATTACK_DAMAGE, 3.0);
+                .add(Attributes.ATTACK_DAMAGE, 3.0)
+                .add(Attributes.FOLLOW_RANGE, 64);
     }
 
     @Override
     protected PathNavigation createNavigation(Level pLevel) {
-        return new WaterBoundPathNavigation(this, pLevel);
+        return new BoPWaterBoundPathNavigation(this, pLevel);
     }
 
     @Override
@@ -194,6 +266,12 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
         return !this.getItemBySlot(equipmentslot).isEmpty() ? false : equipmentslot == EquipmentSlot.MAINHAND && super.canTakeItem(pItemstack);
     }*/
 
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        //System.out.println(pSource);
+        return super.hurt(pSource, pAmount);
+    }
+
     /**
      * Tests if this entity should pick up a weapon or an armor piece. Entity drops current weapon or armor if the new one is better.
      */
@@ -211,14 +289,23 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
         }
     }*/
 
+
+
     @Override
     public void tick() {
         super.tick();
+        if(!this.level().isClientSide){
+            if(!this.isBeached() && !this.isInWaterOrBubble() && verticalCollision){
+                this.setBeached(true);
+            } else if(this.isBeached() && this.isInWaterOrBubble()) {
+                this.setBeached(false);
+            }
+        }
         if (this.isNoAi()) {
             this.setAirSupply(this.getMaxAirSupply());
         } else {
             if (this.isInWaterRainOrBubble()) {
-                this.setMoisntessLevel(2400);
+                this.setMoisntessLevel(maxMoistnessLevel);
             } else {
                 this.setMoisntessLevel(this.getMoistnessLevel() - 1);
                 if (this.getMoistnessLevel() <= 0) {
@@ -376,7 +463,7 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
             event.setAndContinue(getSwimAnimation());
         } else if(canIdle && !event.isMoving() && this.isInWaterOrBubble()) {
             event.setAndContinue(getIdleAnimation());
-        } else if(this.onGround()){
+        } else if(this.isBeached()){
             event.setAndContinue(getBeachedAnimation());
         }
 
@@ -388,52 +475,79 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
         return geoCache;
     }
 
-    /*static class DolphinSwimWithPlayerGoal extends Goal {
-        private final Dolphin dolphin;
-        private final double speedModifier;
-        @Nullable
-        private Player player;
+    @Override
+    public boolean isPersistenceRequired() {
+        return true;
+    }
 
-        DolphinSwimWithPlayerGoal(Dolphin pDolphin, double pSpeedModifier) {
-            this.dolphin = pDolphin;
-            this.speedModifier = pSpeedModifier;
-            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+    @Override
+    protected void pushEntities() {
+        if(!(this.getType() == ModEntities.HUMPBACK_WHALE.get() && !this.isBeached())){
+            super.pushEntities();
+        }
+    }
+
+    static class AnimalSwimMoveControllerSink extends MoveControl {
+        private final PathfinderMob entity;
+        private final float speedMulti;
+        private float ySpeedMod = 1;
+        private float yawLimit = 10.0F;
+
+        public AnimalSwimMoveControllerSink(PathfinderMob entity, float speedMulti, float ySpeedMod) {
+            super(entity);
+            this.entity = entity;
+            this.speedMulti = speedMulti;
+            this.ySpeedMod = ySpeedMod;
         }
 
-        @Override
-        public boolean canUse() {
-            this.player = this.dolphin.level().getNearestPlayer(Dolphin.SWIM_WITH_PLAYER_TARGETING, this.dolphin);
-            return this.player == null ? false : this.player.isSwimming() && this.dolphin.getTarget() != this.player;
+        public AnimalSwimMoveControllerSink(PathfinderMob entity, float speedMulti, float ySpeedMod, float yawLimit) {
+            super(entity);
+            this.entity = entity;
+            this.speedMulti = speedMulti;
+            this.ySpeedMod = ySpeedMod;
+            this.yawLimit = yawLimit;
         }
 
-        @Override
-        public boolean canContinueToUse() {
-            return this.player != null && this.player.isSwimming() && this.dolphin.distanceToSqr(this.player) < 256.0;
-        }
-
-        @Override
-        public void start() {
-            this.player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 100), this.dolphin);
-        }
-
-        @Override
-        public void stop() {
-            this.player = null;
-            this.dolphin.getNavigation().stop();
-        }
-
-        @Override
         public void tick() {
-            this.dolphin.getLookControl().setLookAt(this.player, (float)(this.dolphin.getMaxHeadYRot() + 20), (float)this.dolphin.getMaxHeadXRot());
-            if (this.dolphin.distanceToSqr(this.player) < 6.25) {
-                this.dolphin.getNavigation().stop();
-            } else {
-                this.dolphin.getNavigation().moveTo(this.player, this.speedModifier);
-            }
 
-            if (this.player.isSwimming() && this.player.level().random.nextInt(6) == 0) {
-                this.player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 100), this.dolphin);
+            if (this.operation == Operation.MOVE_TO && !this.entity.getNavigation().isDone()) {
+                double lvt_1_1_ = this.wantedX - this.entity.getX();
+                double lvt_3_1_ = this.wantedY - this.entity.getY();
+                double lvt_5_1_ = this.wantedZ - this.entity.getZ();
+                double lvt_7_1_ = lvt_1_1_ * lvt_1_1_ + lvt_3_1_ * lvt_3_1_ + lvt_5_1_ * lvt_5_1_;
+                if (lvt_7_1_ < 2.500000277905201E-7D) {
+                    this.mob.setZza(0.0F);
+                } else {
+                    float lvt_9_1_ = (float) (Mth.atan2(lvt_5_1_, lvt_1_1_) * 57.2957763671875D) - 90.0F;
+                    this.entity.setYRot(this.rotlerp(this.entity.getYRot(), lvt_9_1_, yawLimit));
+                    this.entity.yBodyRot = this.entity.getYRot();
+                    this.entity.yHeadRot = this.entity.getYRot();
+                    float lvt_10_1_ = (float) (this.speedModifier * speedMulti /** 3*/ * this.entity.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                    if (this.entity.isInWater()) {
+                        if(lvt_3_1_ > 0 && entity.horizontalCollision){
+                            this.entity.setDeltaMovement(this.entity.getDeltaMovement().add(0.0D, 0.08F, 0.0D));
+                        }else{
+                            this.entity.setDeltaMovement(this.entity.getDeltaMovement().add(0.0D, (double) this.entity.getSpeed() * lvt_3_1_ * 0.6D * ySpeedMod, 0.0D));
+                        }
+                        this.entity.setSpeed(lvt_10_1_ * 0.02F);
+                        float lvt_11_1_ = -((float) (Mth.atan2(lvt_3_1_, Mth.sqrt((float) (lvt_1_1_ * lvt_1_1_ + lvt_5_1_ * lvt_5_1_))) * 57.2957763671875D));
+                        lvt_11_1_ = Mth.clamp(Mth.wrapDegrees(lvt_11_1_), -85.0F, 85.0F);
+                        this.entity.setXRot(this.rotlerp(this.entity.getXRot(), lvt_11_1_, 1.0F));
+                        float lvt_12_1_ = Mth.cos(this.entity.getXRot() * 0.017453292F);
+                        float lvt_13_1_ = Mth.sin(this.entity.getXRot() * 0.017453292F);
+                        this.entity.zza = lvt_12_1_ * lvt_10_1_;
+                        this.entity.yya = -lvt_13_1_ * lvt_10_1_;
+                    } else {
+                        this.entity.setSpeed(lvt_10_1_ * 0.1F);
+                    }
+
+                }
+            } else {
+                this.entity.setSpeed(0.0F);
+                this.entity.setXxa(0.0F);
+                this.entity.setYya(0.0F);
+                this.entity.setZza(0.0F);
             }
         }
-    }*/
+    }
 }

@@ -156,7 +156,8 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.5F)
-                .add(Attributes.ATTACK_DAMAGE, 3.0);
+                .add(Attributes.ATTACK_DAMAGE, 3.0)
+                .add(Attributes.FOLLOW_RANGE, 16);
     }
 
     @Override

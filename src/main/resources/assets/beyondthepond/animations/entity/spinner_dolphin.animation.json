@@ -230,6 +230,11 @@
 							"vector": [2.5, 0, 0]
 						}
 					}
+				},
+				"SPINNAA": {
+					"position": {
+						"vector": [0, 8, 0]
+					}
 				}
 			}
 		}

@@ -1,30 +1,30 @@
 package com.prohitman.beyondthepond.entities.goals;
 
 import com.prohitman.beyondthepond.entities.BoPDolphin;
+import com.prohitman.beyondthepond.entities.BoPOrca;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.JumpGoal;
-import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 
-public class BoPJumpGoal extends JumpGoal {
-    private static final int[] STEPS_TO_CHECK = new int[]{0, 1, 4, 5, 6, 7};
-    private final BoPDolphin dolphin;
+public class OrcaJumpGoal extends JumpGoal {
+    private static final int[] STEPS_TO_CHECK = new int[]{0, 1, 4, 5, 6, 7, 10};
+    private final BoPOrca dolphin;
     private final int interval;
     private boolean breached;
 
-    public  BoPJumpGoal(BoPDolphin pDolphin, int pInterval) {
+    public  OrcaJumpGoal(BoPOrca pDolphin, int pInterval) {
         this.dolphin = pDolphin;
         this.interval = reducedTickDelay(pInterval);
     }
 
     @Override
     public boolean canUse() {
-        if (this.dolphin.getRandom().nextInt(this.interval) != 0) {
+        if (this.dolphin.getRandom().nextInt(this.interval) != 0 || dolphin.getTarget() != null) {
             return false;
         } else {
             Direction direction = this.dolphin.getMotionDirection();
@@ -67,7 +67,8 @@ public class BoPJumpGoal extends JumpGoal {
     @Override
     public void start() {
         Direction direction = this.dolphin.getMotionDirection();
-        this.dolphin.setDeltaMovement(this.dolphin.getDeltaMovement().add((double)direction.getStepX() * 0.6, 0.7, (double)direction.getStepZ() * 0.6));
+        float up = 0.7F + dolphin.getRandom().nextFloat() * 0.8F;
+        this.dolphin.setDeltaMovement(this.dolphin.getDeltaMovement().add((double)direction.getStepX() * 0.6, up, (double)direction.getStepZ() * 0.6));
         this.dolphin.getNavigation().stop();
     }
 
@@ -89,12 +90,17 @@ public class BoPJumpGoal extends JumpGoal {
         }
 
         Vec3 vec3 = this.dolphin.getDeltaMovement();
-        if (vec3.y * vec3.y < 0.03F && this.dolphin.getXRot() != 0.0F) {
+        if (vec3.y * vec3.y < 0.01F && this.dolphin.getXRot() != 0.0F) {
             this.dolphin.setXRot(Mth.rotLerp(0.2F, this.dolphin.getXRot(), 0.0F));
-        } else if (vec3.length() > 1.0E-5F) {
+        } /*else if (vec3.length() > 1.0E-5F) {
             double d0 = vec3.horizontalDistance();
             double d1 = Math.atan2(-vec3.y, d0) * 180.0F / (float)Math.PI;
             this.dolphin.setXRot((float)d1);
+        }*/
+        else {
+            double d0 = Math.sqrt(vec3.horizontalDistanceSqr());
+            double d1 = Math.signum(-vec3.y) * Math.acos(d0 / vec3.length()) * (double) Mth.RAD_TO_DEG;
+            this.dolphin.setXRot((float) d1);
         }
     }
 }

@@ -39,13 +39,13 @@ public class ModItems {
     public static final DeferredItem<Item> GIANT_TIGER_PRAWN_SPAWN_EGG = ITEMS.register("giant_tiger_prawn_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.GIANT_TIGER_PRAWN, 0x493421, 0xE5D482, new Item.Properties()));
     public static final DeferredItem<Item> SPINNER_DOLPHIN_SPAWN_EGG = ITEMS.register("spinner_dolphin_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.SPINNER_DOLPHIN, 0x74a3af, 0xcdc9df, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(ModEntities.SPINNER_DOLPHIN, 0x494949, 0x9B9B9B, new Item.Properties()));
 
     public static final DeferredItem<Item> ORCA_SPAWN_EGG = ITEMS.register("orca_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.ORCA, 0x74a3af, 0xcdc9df, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(ModEntities.ORCA, 0x0E0E0F, 0xF3F1D0, new Item.Properties()));
 
     public static final DeferredItem<Item> HUMPBACK_WHALE_SPAWN_EGG = ITEMS.register("humpback_whale_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.HUMPBACK_WHALE, 0x74a3af, 0xcdc9df, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(ModEntities.HUMPBACK_WHALE, 0x727272, 0x545454, new Item.Properties()));
 
     public static final DeferredItem<Item> MANATEE_SPAWN_EGG = ITEMS.register("manatee_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.MANATEE, 0x74a3af, 0xcdc9df, new Item.Properties()));
