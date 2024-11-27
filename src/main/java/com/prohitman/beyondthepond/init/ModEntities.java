@@ -225,7 +225,6 @@ public class ModEntities {
                                     0.01f
                             )),
                     MobCategory.CREATURE).sized(0.75f, 0.6f).eyeHeight(0.3f).build("spinner_dolphin"));
-//New Path navigator needed for stuck detection
     public static final DeferredHolder<EntityType<?>, EntityType<BoPOrca>> ORCA = ENTITIES.register("orca",
             () -> EntityType.Builder.of((BoPOrca::new),
                     MobCategory.CREATURE).sized(3.3f, 2.5f).eyeHeight(1.5f).build("orca"));
@@ -256,8 +255,8 @@ public class ModEntities {
                                     5000,
                                     true,
                                     true,
-                                    5,
-                                    5,
+                                    1,
+                                    1,
                                     false,
                                     0.08f
                             )),
@@ -275,7 +274,7 @@ public class ModEntities {
                                     true,
                                     true
                             )),
-                    MobCategory.CREATURE).sized(0.5f, 0.5f).build("giant_isopod"));
+                    MobCategory.CREATURE).sized(0.35f, 0.25f).build("giant_isopod"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<BoPCrab>> COCONUT_CRAB = ENTITIES.register("coconut_crab",
             () -> EntityType.Builder.<BoPCrab>of(((pEntityType, pLevel) ->
@@ -289,8 +288,49 @@ public class ModEntities {
                                     false,
                                     false
                             )),
-                    MobCategory.CREATURE).sized(0.5f, 0.5f).build("coconut_crab"));
-
+                    MobCategory.CREATURE).sized(0.85f, 0.75f).build("coconut_crab"));
+    public static final DeferredHolder<EntityType<?>, EntityType<EuropeanLobster>> EUROPEAN_LOBSTER = ENTITIES.register("european_lobster",
+            () -> EntityType.Builder.of((EuropeanLobster::new),
+                    MobCategory.CREATURE).sized(0.35f, 0.2f).build("european_lobster"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPCrab>> JAPANESE_SPIDER_CRAB = ENTITIES.register("japanese_spider_crab",
+            () -> EntityType.Builder.<BoPCrab>of(((pEntityType, pLevel) ->
+                            new BoPCrab(pEntityType, pLevel,
+                                    10,
+                                    0.2,
+                                    0,
+                                    10,
+                                    2400,
+                                    false,
+                                    true,
+                                    true
+                            )),
+                    MobCategory.CREATURE).sized(2.25f, 1.5f).build("japanese_spider_crab"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPCrab>> TASMANIAN_CRAB = ENTITIES.register("tasmanian_crab",
+            () -> EntityType.Builder.<BoPCrab>of(((pEntityType, pLevel) ->
+                            new BoPCrab(pEntityType, pLevel,
+                                    10,
+                                    0.15,
+                                    0,
+                                    10,
+                                    2400,
+                                    false,
+                                    false,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(0.55f, 0.2f).build("tasmanian_crab"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BoPCrab>> SALLY_LIGHTFOOT_CRAB = ENTITIES.register("sally_lightfoot_crab",
+            () -> EntityType.Builder.<BoPCrab>of(((pEntityType, pLevel) ->
+                            new BoPCrab(pEntityType, pLevel,
+                                    4,
+                                    0.15,
+                                    0,
+                                    5,
+                                    2400,
+                                    false,
+                                    false,
+                                    false
+                            )),
+                    MobCategory.CREATURE).sized(0.3f, 0.125f).build("sally_lightfoot_crab"));
     public static final DeferredHolder<EntityType<?>, EntityType<BoPTurtle>> GREEN_SEA_TURTLE = ENTITIES.register("green_sea_turtle",
             () -> EntityType.Builder.<BoPTurtle>of(((pEntityType, pLevel) ->
                             new BoPTurtle(pEntityType, pLevel,

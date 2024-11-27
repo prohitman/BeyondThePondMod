@@ -5,19 +5,19 @@
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
-				"body": {
-					"rotation": {
-						"vector": ["math.sin(query.anim_time* 180)", 0, 0]
-					}
-				},
-				"boody": {
+				"12": {
 					"rotation": {
 						"vector": ["math.sin(query.anim_time* 180-30) * 2", 0, 0]
 					}
 				},
-				"Body2": {
+				"3214": {
 					"rotation": {
 						"vector": ["math.sin(query.anim_time* 180-60) * 2", 0, 0]
+					}
+				},
+				"body": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time* 180)", 0, 0]
 					}
 				},
 				"tail": {
@@ -53,15 +53,7 @@
 		"beached": {
 			"animation_length": 2,
 			"bones": {
-				"body": {
-					"rotation": {
-						"vector": [7.5, 0, 0]
-					},
-					"position": {
-						"vector": [0, -5.99144, 0.13053]
-					}
-				},
-				"boody": {
+				"12": {
 					"rotation": {
 						"vector": [-2.52154, 7.49282, -0.32902]
 					},
@@ -69,12 +61,20 @@
 						"vector": [-0.09789, 0.03243, -0.74288]
 					}
 				},
-				"Body2": {
+				"3214": {
 					"rotation": {
 						"vector": [-7.56397, 7.43547, -0.98448]
 					},
 					"position": {
 						"vector": [0.13303, 0.06811, -0.51736]
+					}
+				},
+				"body": {
+					"rotation": {
+						"vector": [7.5, 0, 0]
+					},
+					"position": {
+						"vector": [0, -5.99144, 0.13053]
 					}
 				},
 				"tail": {
@@ -135,6 +135,11 @@
 						"0.2917": {
 							"vector": [-15, 0, 70]
 						}
+					}
+				},
+				"manatee": {
+					"position": {
+						"vector": [0, 5, 0]
 					}
 				}
 			}
@@ -207,19 +212,19 @@
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
-				"body": {
-					"rotation": {
-						"vector": ["math.sin(query.anim_time* 180)", 0, 0]
-					}
-				},
-				"boody": {
+				"12": {
 					"rotation": {
 						"vector": ["math.sin(query.anim_time* 180-30) * 0.5", 0, 0]
 					}
 				},
-				"Body2": {
+				"3214": {
 					"rotation": {
 						"vector": ["math.sin(query.anim_time* 180-60) * 0.6", 0, 0]
+					}
+				},
+				"body": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time* 180)", 0, 0]
 					}
 				},
 				"tail": {

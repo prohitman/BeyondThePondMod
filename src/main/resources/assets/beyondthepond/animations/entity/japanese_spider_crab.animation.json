@@ -75,7 +75,7 @@
 				}
 			}
 		},
-		"walk": {
+		"walking": {
 			"loop": true,
 			"bones": {
 				"torso": {

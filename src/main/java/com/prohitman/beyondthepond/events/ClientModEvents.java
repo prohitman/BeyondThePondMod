@@ -52,6 +52,10 @@ public class ClientModEvents {
 
             registerRenderers(ModEntities.GIANT_ISOPOD.get(), "giant_isopod", false, false, 0, 0.35f );
             registerRenderers(ModEntities.COCONUT_CRAB.get(), "coconut_crab", false, false, 0, 0.5f );
+            registerRenderers(ModEntities.EUROPEAN_LOBSTER.get(), "european_lobster", false, false, 0, 0.2f );
+            registerRenderers(ModEntities.JAPANESE_SPIDER_CRAB.get(), "japanese_spider_crab", false, false, 0, 1);
+            registerRenderers(ModEntities.TASMANIAN_CRAB.get(), "tasmanian_crab", false, false, 0, 0.25f );
+            registerRenderers(ModEntities.SALLY_LIGHTFOOT_CRAB.get(), "sally_lightfoot_crab", false, false, 0, 0.1f );
 
             registerRenderers(ModEntities.GREEN_SEA_TURTLE.get(), "green_sea_turtle", true, false, 0, 0.75f);
         });

@@ -48,12 +48,20 @@ public class ModItems {
             () -> new DeferredSpawnEggItem(ModEntities.HUMPBACK_WHALE, 0x727272, 0x545454, new Item.Properties()));
 
     public static final DeferredItem<Item> MANATEE_SPAWN_EGG = ITEMS.register("manatee_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.MANATEE, 0x74a3af, 0xcdc9df, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(ModEntities.MANATEE, 0xA3997B, 0x51413C, new Item.Properties()));
 
     public static final DeferredItem<Item> GIANT_ISOPOD_SPAWN_EGG = ITEMS.register("giant_isopod_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.GIANT_ISOPOD, 0x74a3af, 0xcdc9df, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(ModEntities.GIANT_ISOPOD, 0xB7A3AD, 0xEEDEE6, new Item.Properties()));
     public static final DeferredItem<Item> COCONUT_CRAB_SPAWN_EGG = ITEMS.register("coconut_crab_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.COCONUT_CRAB, 0x74a3af, 0xcdc9df, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(ModEntities.COCONUT_CRAB, 0x9E5F40, 0x2C88BD, new Item.Properties()));
+    public static final DeferredItem<Item> EUROPEAN_LOBSTER_SPAWN_EGG = ITEMS.register("european_lobster_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.EUROPEAN_LOBSTER, 0x2A4876, 0x142641, new Item.Properties()));
+    public static final DeferredItem<Item> JAPANESE_SPIDER_CRAB_SPAWN_EGG = ITEMS.register("japanese_spider_crab_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.JAPANESE_SPIDER_CRAB, 0xD14E2D, 0xE8D0CA, new Item.Properties()));
+    public static final DeferredItem<Item> TASMANIAN_CRAB_SPAWN_EGG = ITEMS.register("tasmanian_crab_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.TASMANIAN_CRAB, 0xD04E2D, 0x3A251F, new Item.Properties()));
+    public static final DeferredItem<Item> SALLY_LIGHTFOOT_CRAB_SPAWN_EGG = ITEMS.register("sally_lightfoot_crab_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.SALLY_LIGHTFOOT_CRAB, 0x972918, 0x7FB2B3, new Item.Properties()));
 
     public static final DeferredItem<Item> GREEN_SEA_TURTLE_SPAWN_EGG = ITEMS.register("green_sea_turtle_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.GREEN_SEA_TURTLE, 0x74a3af, 0xcdc9df, new Item.Properties()));

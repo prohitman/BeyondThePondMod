@@ -39,6 +39,10 @@ public class CommonModEvents {
 
         event.put(ModEntities.GIANT_ISOPOD.get(), BoPCrab.createAttributes().build());
         event.put(ModEntities.COCONUT_CRAB.get(), BoPCrab.createAttributes().build());
+        event.put(ModEntities.EUROPEAN_LOBSTER.get(), BoPCrab.createAttributes().build());
+        event.put(ModEntities.JAPANESE_SPIDER_CRAB.get(), BoPCrab.createAttributes().build());
+        event.put(ModEntities.TASMANIAN_CRAB.get(), BoPCrab.createAttributes().build());
+        event.put(ModEntities.SALLY_LIGHTFOOT_CRAB.get(), BoPCrab.createAttributes().build());
 
         event.put(ModEntities.GREEN_SEA_TURTLE.get(), BoPTurtle.createAttributes().build());
 

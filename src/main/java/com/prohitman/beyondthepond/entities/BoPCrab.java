@@ -1,11 +1,15 @@
 package com.prohitman.beyondthepond.entities;
 
-import com.prohitman.beyondthepond.entities.goals.BoPGoToWaterGoal;
+import com.prohitman.beyondthepond.entities.goals.BoPBottomWaterWanderGoal;
+import com.prohitman.beyondthepond.entities.goals.BoPFindWaterGoal;
+import com.prohitman.beyondthepond.entities.goals.BoPLeaveWaterGoal;
+import com.prohitman.beyondthepond.init.ModEntities;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
@@ -13,21 +17,19 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.PanicGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.Turtle;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.monster.Silverfish;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -36,7 +38,6 @@ import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.UUID;
-import java.util.function.Predicate;
 
 public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
@@ -50,10 +51,10 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
     public int maxHeadRotation;
     public boolean fightsBack;
     public boolean driesOut;
-    public boolean prefersWater;
+    public boolean isFullyAquatic;
     public int maxAirSupply;
 
-    public BoPCrab(EntityType<? extends WaterAnimal> pEntityType, Level pLevel, double maxHealth, double maxSpeed, double attackDamage, int maxHeadRotation, int maxAirSupply, boolean fightsBack, boolean driesOut, boolean prefersWater/*, boolean flippedMovement*/) {
+    public BoPCrab(EntityType<? extends WaterAnimal> pEntityType, Level pLevel, double maxHealth, double maxSpeed, double attackDamage, int maxHeadRotation, int maxAirSupply, boolean fightsBack, boolean driesOut, boolean isFullyAquatic/*, boolean flippedMovement*/) {
         super(pEntityType, pLevel);
         this.maxHealth = maxHealth;
         this.maxSpeed = maxSpeed;
@@ -61,10 +62,15 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
         this.maxHeadRotation = maxHeadRotation;
         this.fightsBack = fightsBack;
         this.driesOut = driesOut;
-        this.prefersWater = prefersWater;
+        this.isFullyAquatic = isFullyAquatic;
         this.maxAirSupply = maxAirSupply;
 
-        this.setPathfindingMalus(PathType.WATER, prefersWater ? 0 : 2);
+        this.setPathfindingMalus(PathType.WATER, pEntityType == ModEntities.COCONUT_CRAB.get() ? 3 : 0);
+    }
+
+    @Override
+    public float maxUpStep() {
+        return 1;
     }
 
     @Override
@@ -94,10 +100,26 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
                 return super.canUse();
             }
         });
-        //Fix random stroll goal for drying out mobs
         this.goalSelector.addGoal(1, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 0.5f));
-        this.goalSelector.addGoal(9, new BoPGoToWaterGoal(this, 0.6f));
+        this.goalSelector.addGoal(1, new BoPFindWaterGoal(this, isFullyAquatic ? 1 :40){
+            @Override
+            public boolean canUse() {
+                if(BoPCrab.this.getType() == ModEntities.COCONUT_CRAB.get()){
+                    return false;
+                }
+                return super.canUse();
+            }
+        });
+        this.goalSelector.addGoal(2, new BoPLeaveWaterGoal(this){
+            @Override
+            public void start() {
+                if(BoPCrab.this.getType() == ModEntities.COCONUT_CRAB.get()){
+                    this.executionChance = 1;
+                }
+                super.start();
+            }
+        });
+        this.goalSelector.addGoal(3, new BoPBottomWaterWanderGoal(this, 1.0D, 10, 10));
         this.goalSelector.addGoal(3, new PanicGoal(this, 0.65){
             @Override
             public boolean canUse() {
@@ -173,6 +195,38 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
                 this.setAirSupply(300);
             }
         }
+    }
+
+    @Override
+    protected float getWaterSlowDown() {
+        return 0.875f;
+    }
+
+    public void travel(Vec3 travelVector) {
+        if (this.isEffectiveAi() && this.isInWater()) {
+            this.moveRelative(this.getSpeed(), travelVector);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+/*           if(this.jumping && (this.getType() == ModEntities.EUROPEAN_LOBSTER.get() || this.getType() == ModEntities.GIANT_ISOPOD.get() || this.getType() == ModEntities.SALLY_LIGHTFOOT_CRAB.get())){
+                this.setDeltaMovement(this.getDeltaMovement().scale(1.4D));
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.5D, 0.0D));
+            }else{*/
+                this.setDeltaMovement(this.getDeltaMovement().scale(0.4D));
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.08D, 0.0D));
+            //}
+
+        } else {
+            super.travel(travelVector);
+        }
+
+    }
+
+    public float getWalkTargetValue(BlockPos pos, LevelReader worldIn) {
+        return worldIn.getFluidState(pos.below()).isEmpty() && worldIn.getFluidState(pos).is(FluidTags.WATER) && this.getType() != ModEntities.COCONUT_CRAB.get() ? 10.0F : super.getWalkTargetValue(pos, worldIn);
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level pLevel) {
+        return this.getType() != ModEntities.COCONUT_CRAB.get() ? new CrabPathNavigator(this, pLevel) : super.createNavigation(pLevel);
     }
 
     @Nullable

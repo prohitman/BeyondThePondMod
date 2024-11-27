@@ -60,7 +60,7 @@
 				}
 			}
 		},
-		"walk": {
+		"walking": {
 			"loop": true,
 			"bones": {
 				"bone2": {
@@ -94,7 +94,7 @@
 					"rotation": ["-math.sin(query.anim_time*90)*1", "NaN-math.cos(query.anim_time*90)*1", 0]
 				},
 				"claw_right3": {
-					"rotation": ["math.sin(query.anim_time*90-10)*1", "-(math.cos(query.anim_time*90-20)*3)", 0]
+					"rotation": ["math.sin(query.anim_time*90-10)*1", "-math.cos(query.anim_time*90-20)*3", 0]
 				},
 				"claw_right4": {
 					"rotation": [0, "-(math.sin(query.anim_time*90-30)*3)", 0]

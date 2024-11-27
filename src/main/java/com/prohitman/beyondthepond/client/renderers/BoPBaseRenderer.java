@@ -2,6 +2,7 @@ package com.prohitman.beyondthepond.client.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import com.prohitman.beyondthepond.BeyondThePond;
 import com.prohitman.beyondthepond.client.models.BoPBaseModel;
 import com.prohitman.beyondthepond.client.models.BoPDolphinModel;
@@ -15,6 +16,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.TurtleRenderer;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -57,6 +59,10 @@ public class BoPBaseRenderer<T extends LivingEntity & GeoEntity> extends GeoEnti
             if(animatable.getType().is(ModEntityTagsGen.TURTLES) && ((Animal)animatable).isBaby()){
                 float f1 = 1.0F / 6;
                 poseStack.scale(f1, f1, f1);
+            }
+
+            if(animatable.getType() == ModEntities.TASMANIAN_CRAB.get() || animatable.getType() == ModEntities.SALLY_LIGHTFOOT_CRAB.get()){
+                poseStack.mulPose(Axis.YP.rotationDegrees(90));
             }
 /*            if(animatable.getType() == ModEntities.HUMPBACK_WHALE.get()){
                 poseStack.translate(0, -3, 0);

@@ -209,7 +209,15 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
                 return super.canUse();
             }
         });
-        this.goalSelector.addGoal(5, new BoPJumpGoal(this, 10));
+        this.goalSelector.addGoal(5, new BoPJumpGoal(this, 10){
+            @Override
+            public boolean canUse() {
+                if(BoPDolphin.this.getType() == ModEntities.MANATEE.get()){
+                    return false;
+                }
+                return super.canUse();
+            }
+        });
         this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2F, true));
         //this.goalSelector.addGoal(8, new Dolphin.PlayWithItemsGoal());
         this.goalSelector.addGoal(8, new FollowBoatGoal(this));
@@ -238,7 +246,7 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
     @Override
     public int getMaxAirSupply() {
         return maxAirSupply;
-    }//4800
+    }
 
     @Override
     protected int increaseAirSupply(int pCurrentAir) {
@@ -265,12 +273,6 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
         EquipmentSlot equipmentslot = this.getEquipmentSlotForItem(pItemstack);
         return !this.getItemBySlot(equipmentslot).isEmpty() ? false : equipmentslot == EquipmentSlot.MAINHAND && super.canTakeItem(pItemstack);
     }*/
-
-    @Override
-    public boolean hurt(DamageSource pSource, float pAmount) {
-        //System.out.println(pSource);
-        return super.hurt(pSource, pAmount);
-    }
 
     /**
      * Tests if this entity should pick up a weapon or an armor piece. Entity drops current weapon or armor if the new one is better.

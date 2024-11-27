@@ -38,6 +38,10 @@ public class ModItemModelGen extends ItemModelProvider {
         withExistingParent(ModItems.SAILFISH_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.SUNFISH_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GIANT_TIGER_PRAWN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.EUROPEAN_LOBSTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.JAPANESE_SPIDER_CRAB_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.TASMANIAN_CRAB_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.SALLY_LIGHTFOOT_CRAB_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
     }
 }
