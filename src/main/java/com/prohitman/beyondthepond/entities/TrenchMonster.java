@@ -96,11 +96,7 @@ public class TrenchMonster extends PathfinderMob implements GeoEntity {
     public static boolean checkSurfaceWaterAnimalSpawnRules(
             EntityType<? extends TrenchMonster> pWaterAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom
     ) {
-        int i = pLevel.getSeaLevel();
-        int j = i - 13;
-        return pPos.getY() >= j
-                && pPos.getY() <= i
-                && pLevel.getFluidState(pPos.below()).is(FluidTags.WATER)
+        return pLevel.getFluidState(pPos.below()).is(FluidTags.WATER)
                 && pLevel.getBlockState(pPos.above()).is(Blocks.WATER);
     }
 }

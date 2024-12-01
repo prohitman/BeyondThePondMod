@@ -32,6 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -166,7 +167,6 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
     public void tick() {
         super.tick();
         if(!this.level().isClientSide){
-            //System.out.println("Speed: " + this.getSpeed() + " Speed Modifier: " + this.moveControl.getSpeedModifier());
         }
     }
 
@@ -335,7 +335,21 @@ public class BoPCrab extends WaterAnimal implements GeoEntity, NeutralMob {
     public static boolean checkAnimalSpawnRules(
             EntityType<? extends BoPCrab> pAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom
     ) {
-        boolean flag = MobSpawnType.ignoresLightRequirements(pSpawnType);
-        return pLevel.getBlockState(pPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && flag;
+        return pLevel.getBlockState(pPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
+    }
+
+    public static boolean checkDeepWaterSpawnRules(
+            EntityType<? extends WaterAnimal> pWaterAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom
+    ) {
+        return pLevel.getFluidState(pPos.below()).is(FluidTags.WATER)
+                && pLevel.getBlockState(pPos.above()).is(Blocks.WATER);
+    }
+
+    public static boolean checkDeepWaterWithRaritySpawnRules(
+            EntityType<? extends WaterAnimal> pWaterAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom, int chance
+    ) {
+        return pLevel.getFluidState(pPos.below()).is(FluidTags.WATER)
+                && pLevel.getBlockState(pPos.above()).is(Blocks.WATER)
+                && pRandom.nextInt(chance) == 0;
     }
 }

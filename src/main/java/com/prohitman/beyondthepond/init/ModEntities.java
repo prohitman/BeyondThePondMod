@@ -210,6 +210,24 @@ public class ModEntities {
                                     true
                             )),
                     MobCategory.CREATURE).sized(0.35f, 0.35f).build("giant_tiger_prawn"));
+
+/*    public static final DeferredHolder<EntityType<?>, EntityType<BoPFish>> BLUE_RIBBON_EEL = ENTITIES.register("blue_ribbon_eel",
+            () -> EntityType.Builder.<BoPFish>of(((pEntityType, pLevel) ->
+                            new BoPFish(pEntityType, pLevel,
+                                    10,
+                                    0.9,
+                                    0,
+                                    1,
+                                    false,
+                                    false,
+                                    false,
+                                    2,
+                                    true,
+                                    true,
+                                    0.25f,
+                                    1.75f
+                            )),
+                    MobCategory.CREATURE).sized(1.575f, 1.8f).build("sunfish"));*/
     public static final DeferredHolder<EntityType<?>, EntityType<BoPDolphin>> SPINNER_DOLPHIN = ENTITIES.register("spinner_dolphin",
             () -> EntityType.Builder.<BoPDolphin>of(((pEntityType, pLevel) ->
                             new BoPDolphin(pEntityType, pLevel,

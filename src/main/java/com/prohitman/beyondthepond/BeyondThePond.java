@@ -1,8 +1,11 @@
 package com.prohitman.beyondthepond;
 
+import com.prohitman.beyondthepond.init.ModBiomeModifiers;
 import com.prohitman.beyondthepond.init.ModCreativeTab;
 import com.prohitman.beyondthepond.init.ModEntities;
 import com.prohitman.beyondthepond.init.ModItems;
+import net.minecraft.world.level.levelgen.feature.CoralClawFeature;
+import net.minecraft.world.level.levelgen.feature.CoralFeature;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -51,6 +54,7 @@ public class BeyondThePond
         ModItems.ITEMS.register(modEventBus);
         ModCreativeTab.CREATIVE_MODE_TABS.register(modEventBus);
         ModEntities.ENTITIES.register(modEventBus);
+        ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
     }

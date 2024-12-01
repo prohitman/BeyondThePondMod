@@ -18,6 +18,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.StructureTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -44,7 +45,9 @@ import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.Vec3;
 import org.w3c.dom.Attr;
@@ -551,5 +554,17 @@ public class BoPDolphin extends WaterAnimal implements GeoEntity {
                 this.entity.setZza(0.0F);
             }
         }
+    }
+
+    public static boolean checkWithRaritySpawnRules(
+            EntityType<? extends WaterAnimal> pWaterAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom, int chance
+    ) {
+        int i = pLevel.getSeaLevel();
+        int j = i - 20;
+        return pPos.getY() >= j
+                && pPos.getY() <= i
+                && pLevel.getFluidState(pPos.below()).is(FluidTags.WATER)
+                && pLevel.getBlockState(pPos.above()).is(Blocks.WATER)
+                && pRandom.nextInt(chance) == 0;
     }
 }

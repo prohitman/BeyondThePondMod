@@ -3,6 +3,7 @@ package com.prohitman.beyondthepond.entities;
 import com.prohitman.beyondthepond.entities.goals.BoPPanicGoal;
 import com.prohitman.beyondthepond.init.ModEntities;
 import com.prohitman.beyondthepond.init.ModItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -11,6 +12,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
@@ -36,8 +39,10 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Attr;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -471,5 +476,36 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
         public boolean canUse() {
             return this.fish.canRandomSwim() && super.canUse();
         }
+    }
+
+    public static boolean checkCaftishSpawnRules(
+            EntityType<? extends WaterAnimal> pWaterAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom
+    ) {
+        int i = pLevel.getSeaLevel();
+        int j = i - 6;
+        return pPos.getY() >= j
+                && pPos.getY() <= i
+                && pLevel.getFluidState(pPos.below()).is(FluidTags.WATER)
+                && pLevel.getBlockState(pPos.above()).is(Blocks.WATER)
+                && pLevel.getRandom().nextInt(4) == 0;
+    }
+
+    public static boolean checkDeepWaterSpawnRules(
+            EntityType<? extends WaterAnimal> pWaterAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom
+    ) {
+        return pLevel.getFluidState(pPos.below()).is(FluidTags.WATER)
+                && pLevel.getBlockState(pPos.above()).is(Blocks.WATER);
+    }
+
+    public static boolean checkWithRaritySpawnRules(
+            EntityType<? extends WaterAnimal> pWaterAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom, int chance
+    ) {
+        int i = pLevel.getSeaLevel();
+        int j = i - 13;
+        return pPos.getY() >= j
+                && pPos.getY() <= i
+                && pLevel.getFluidState(pPos.below()).is(FluidTags.WATER)
+                && pLevel.getBlockState(pPos.above()).is(Blocks.WATER)
+                && pRandom.nextInt(chance) == 0;
     }
 }

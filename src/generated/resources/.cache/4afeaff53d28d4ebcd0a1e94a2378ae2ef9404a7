@@ -1,0 +1,8 @@
+// 1.21	2024-12-01T12:32:31.8429431	Tags for minecraft:item mod id beyondthepond
+640f5484b8b1cdc7d4b1c5f3aa8f89821647c751 data/c/tags/item/bop_cooked_fish.json
+89b59267f0f44945af2e49f2a45436a3a8cd77e9 data/c/tags/item/bop_raw_fish.json
+51f011fa4ac761a813fe219274db93d23c74ff00 data/c/tags/item/foods/cooked_fish.json
+cb42113edef6c14b9e6e26b2fc5ba7be7d19ce4e data/c/tags/item/foods/raw_fish.json
+cb42113edef6c14b9e6e26b2fc5ba7be7d19ce4e data/minecraft/tags/item/cat_food.json
+5ad08074d4649c11ddffdc927f248541b27f6fac data/minecraft/tags/item/fishes.json
+cb42113edef6c14b9e6e26b2fc5ba7be7d19ce4e data/minecraft/tags/item/ocelot_food.json

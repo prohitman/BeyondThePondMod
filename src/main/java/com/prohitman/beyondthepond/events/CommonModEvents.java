@@ -56,30 +56,39 @@ public class CommonModEvents {
     @SubscribeEvent
     public static void registerSpawns(@NotNull RegisterSpawnPlacementsEvent event) {
         event.register(ModEntities.RAINBOW_TROUT.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ModEntities.COOKIE_CUTTER_SHARK.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ModEntities.SPOTTED_EAGLE_STINGRAY.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ModEntities.CHANNEL_CATFISH.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.COOKIE_CUTTER_SHARK.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BoPFish::checkDeepWaterSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.SPOTTED_EAGLE_STINGRAY.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ((pEntityType, pServerLevel, pSpawnType, pPos, pRandom) ->
+                BoPFish.checkWithRaritySpawnRules(pEntityType, pServerLevel, pSpawnType, pPos, pRandom, 4)), RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.CHANNEL_CATFISH.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BoPFish::checkCaftishSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(ModEntities.CUTTLEFISH.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(ModEntities.LARGEMOUTH_BASS.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(ModEntities.LEMON_SHARK.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(ModEntities.LONGNOSE_GAR.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(ModEntities.NURSE_SHARK.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(ModEntities.SAILFISH.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ModEntities.SUNFISH.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.SUNFISH.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ((pEntityType, pServerLevel, pSpawnType, pPos, pRandom) ->
+                BoPFish.checkWithRaritySpawnRules(pEntityType, pServerLevel, pSpawnType, pPos, pRandom, 8)), RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(ModEntities.GIANT_TIGER_PRAWN.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(ModEntities.SPINNER_DOLPHIN.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ModEntities.ORCA.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ModEntities.HUMPBACK_WHALE.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.ORCA.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ((pEntityType, pServerLevel, pSpawnType, pPos, pRandom) ->
+                BoPFish.checkWithRaritySpawnRules(pEntityType, pServerLevel, pSpawnType, pPos, pRandom, 6)), RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.HUMPBACK_WHALE.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ((pEntityType, pServerLevel, pSpawnType, pPos, pRandom) ->
+                BoPFish.checkWithRaritySpawnRules(pEntityType, pServerLevel, pSpawnType, pPos, pRandom, 10)), RegisterSpawnPlacementsEvent.Operation.OR);
         event.register(ModEntities.MANATEE.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
 
         event.register(ModEntities.COCONUT_CRAB.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BoPCrab::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ModEntities.EUROPEAN_LOBSTER.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ModEntities.JAPANESE_SPIDER_CRAB.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ModEntities.TASMANIAN_CRAB.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
-        event.register(ModEntities.SALLY_LIGHTFOOT_CRAB.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.EUROPEAN_LOBSTER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.OCEAN_FLOOR, BoPCrab::checkDeepWaterSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.JAPANESE_SPIDER_CRAB.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.OCEAN_FLOOR, ((pEntityType, pServerLevel, pSpawnType, pPos, pRandom) ->
+                BoPCrab.checkDeepWaterWithRaritySpawnRules(pEntityType, pServerLevel, pSpawnType, pPos, pRandom, 5)), RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.TASMANIAN_CRAB.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.OCEAN_FLOOR, ((pEntityType, pServerLevel, pSpawnType, pPos, pRandom) ->
+                BoPCrab.checkDeepWaterWithRaritySpawnRules(pEntityType, pServerLevel, pSpawnType, pPos, pRandom, 4)), RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.SALLY_LIGHTFOOT_CRAB.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.OCEAN_FLOOR, ((pEntityType, pServerLevel, pSpawnType, pPos, pRandom) ->
+                BoPFish.checkWithRaritySpawnRules(pEntityType, pServerLevel, pSpawnType, pPos, pRandom, 3)), RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.GIANT_ISOPOD.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.OCEAN_FLOOR, BoPCrab::checkDeepWaterSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
 
-        event.register(ModEntities.GREEN_SEA_TURTLE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BoPTurtle::checkTurtleSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(ModEntities.GREEN_SEA_TURTLE.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BoPTurtle::checkGreenTurtleSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
 
         event.register(ModEntities.TRENCH_MONSTER.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, TrenchMonster::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
     }
+
 }

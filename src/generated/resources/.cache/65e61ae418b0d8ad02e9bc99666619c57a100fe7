@@ -1,0 +1,6 @@
+// 1.21	2024-11-28T01:02:58.5210341	Tags for minecraft:entity_type mod id beyondthepond
+c88ef0430b8cb919b9c854abb4d7c601dfcf8030 data/beyondthepond/tags/entity_type/dolphins.json
+87ba428644b94f36bb4046621fe1ad067c0c212b data/beyondthepond/tags/entity_type/turtles.json
+867415973f59e513c2ac41b50b083247ddefc825 data/minecraft/tags/entity_type/aquatic.json
+31f6494e5340d10edb35a16d6b5111dbdf1e5659 data/minecraft/tags/entity_type/can_breathe_under_water.json
+ad0318e7d8736bc44ef8ac3777aee5ebdda14eb1 data/minecraft/tags/entity_type/not_scary_for_pufferfish.json
