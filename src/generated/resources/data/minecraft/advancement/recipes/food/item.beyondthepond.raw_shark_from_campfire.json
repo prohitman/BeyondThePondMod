@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_item.beyondthepond.raw_shark": {
+      "conditions": {
+        "items": [
+          {
+            "items": "beyondthepond:raw_shark"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:item.beyondthepond.raw_shark_from_campfire"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_item.beyondthepond.raw_shark"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:item.beyondthepond.raw_shark_from_campfire"
+    ]
+  }
+}

@@ -3,10 +3,8 @@ package com.prohitman.beyondthepond.datagen.client;
 import com.prohitman.beyondthepond.BeyondThePond;
 import com.prohitman.beyondthepond.init.ModItems;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
 
 public class ModItemModelGen extends ItemModelProvider {
 
@@ -42,6 +40,41 @@ public class ModItemModelGen extends ItemModelProvider {
         withExistingParent(ModItems.JAPANESE_SPIDER_CRAB_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.TASMANIAN_CRAB_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.SALLY_LIGHTFOOT_CRAB_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.TRENCH_MONSTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+
+        basicItem(ModItems.RAINBOW_TROUT_BUCKET.get());
+        basicItem(ModItems.CHANNEL_CATFISH_BUCKET.get());
+        basicItem(ModItems.LONGNOSE_GAR_BUCKET.get());
+        basicItem(ModItems.LARGEMOUTH_BASS_BUCKET.get());
+
+        basicItem(ModItems.RAW_ISOPOD.get());
+        basicItem(ModItems.RAW_COOKIECUTTER.get());
+        basicItem(ModItems.RAW_CUTTLEFISH.get());
+        basicItem(ModItems.RAW_LARGE_CRAB.get());
+        basicItem(ModItems.RAW_LOBSTER.get());
+        basicItem(ModItems.RAW_MEDIUM_CRAB.get());
+        basicItem(ModItems.RAW_SAILFISH.get());
+        basicItem(ModItems.RAW_SHARK.get());
+        basicItem(ModItems.RAW_SHRIMP.get());
+        basicItem(ModItems.RAW_SMALL_CRAB.get());
+        basicItem(ModItems.RAW_SPIDERCRAB.get());
+        basicItem(ModItems.RAW_STINGRAY.get());
+        basicItem(ModItems.RAW_SUNFISH.get());
+        basicItem(ModItems.RAW_TURTLE.get());
+        basicItem(ModItems.COOKED_ISOPOD.get());
+        basicItem(ModItems.COOKED_COOKIECUTTER.get());
+        basicItem(ModItems.COOKED_CUTTLEFISH.get());
+        basicItem(ModItems.COOKED_LARGE_CRAB.get());
+        basicItem(ModItems.COOKED_LOBSTER.get());
+        basicItem(ModItems.COOKED_MEDIUM_CRAB.get());
+        basicItem(ModItems.COOKED_SAILFISH.get());
+        basicItem(ModItems.COOKED_SHARK.get());
+        basicItem(ModItems.COOKED_SHRIMP.get());
+        basicItem(ModItems.COOKED_SMALL_CRAB.get());
+        basicItem(ModItems.COOKED_SPIDERCRAB.get());
+        basicItem(ModItems.COOKED_STINGRAY.get());
+        basicItem(ModItems.COOKED_SUNFISH.get());
+        basicItem(ModItems.COOKED_TURTLE.get());
 
     }
 }

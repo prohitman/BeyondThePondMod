@@ -1,11 +1,14 @@
 package com.prohitman.beyondthepond.datagen.server;
 
 import com.prohitman.beyondthepond.BeyondThePond;
+import com.prohitman.beyondthepond.init.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -14,6 +17,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class ModItemTagsGen extends ItemTagsProvider {
+    public static final TagKey<Item> BOP_RAW_FISH = tag("bop_raw_fish");
+    public static final TagKey<Item> BOP_COOKED_FISH = tag("bop_cooked_fish");
+
 
     public ModItemTagsGen(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider, CompletableFuture<TagLookup<Block>> pBlockTags, @Nullable ExistingFileHelper existingFileHelper) {
         super(pOutput, pLookupProvider, pBlockTags, BeyondThePond.MODID, existingFileHelper);
@@ -21,39 +27,50 @@ public class ModItemTagsGen extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        /*tag(ItemTags.DECORATED_POT_SHERDS)
-                .add(ModItems.BEAST_POTTERY_SHERD.get())
-                .add(ModItems.FROST_POTTERY_SHERD.get())
-                .add(ModItems.WOODS_POTTERY_SHERD.get());
+        tag(BOP_COOKED_FISH)
+                .add(ModItems.COOKED_ISOPOD.get())
+                .add(ModItems.COOKED_COOKIECUTTER.get())
+                .add(ModItems.COOKED_CUTTLEFISH.get())
+                .add(ModItems.COOKED_LARGE_CRAB.get())
+                .add(ModItems.COOKED_LOBSTER.get())
+                .add(ModItems.COOKED_MEDIUM_CRAB.get())
+                .add(ModItems.COOKED_SAILFISH.get())
+                .add(ModItems.COOKED_SHARK.get())
+                .add(ModItems.COOKED_SHRIMP.get())
+                .add(ModItems.COOKED_SMALL_CRAB.get())
+                .add(ModItems.COOKED_SPIDERCRAB.get())
+                .add(ModItems.COOKED_STINGRAY.get())
+                .add(ModItems.COOKED_SUNFISH.get())
+                .add(ModItems.COOKED_TURTLE.get());
+        tag(BOP_RAW_FISH)
+                .add(ModItems.RAW_ISOPOD.get())
+                .add(ModItems.RAW_COOKIECUTTER.get())
+                .add(ModItems.RAW_CUTTLEFISH.get())
+                .add(ModItems.RAW_LARGE_CRAB.get())
+                .add(ModItems.RAW_LOBSTER.get())
+                .add(ModItems.RAW_MEDIUM_CRAB.get())
+                .add(ModItems.RAW_SAILFISH.get())
+                .add(ModItems.RAW_SHARK.get())
+                .add(ModItems.RAW_SHRIMP.get())
+                .add(ModItems.RAW_SMALL_CRAB.get())
+                .add(ModItems.RAW_SPIDERCRAB.get())
+                .add(ModItems.RAW_STINGRAY.get())
+                .add(ModItems.RAW_SUNFISH.get())
+                .add(ModItems.RAW_TURTLE.get());
+        tag(Tags.Items.FOODS_COOKED_FISH)
+            .addTag(BOP_COOKED_FISH);
+        tag(Tags.Items.FOODS_RAW_FISH)
+                .addTag(BOP_RAW_FISH);
+        tag(ItemTags.OCELOT_FOOD)
+                .addTag(BOP_RAW_FISH);
+        tag(ItemTags.CAT_FOOD)
+                .addTag(BOP_RAW_FISH);
+        tag(ItemTags.FISHES)
+                .addTag(BOP_RAW_FISH)
+                .addTag(BOP_COOKED_FISH);
+    }
 
-        tag(ItemTags.MEAT)
-                .add(ModItems.COOKED_VENISON.get())
-                .add(ModItems.RAW_VENISON.get());
-        tag(Tags.Items.FOODS_COOKED_MEAT)
-                .add(ModItems.COOKED_VENISON.get());
-        copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
-        copy(BlockTags.PLANKS, ItemTags.PLANKS);
-        copy(BlockTags.LEAVES, ItemTags.LEAVES);
-        copy(BlockTags.TALL_FLOWERS, ItemTags.TALL_FLOWERS);
-
-        tag(ModTags.Items.FROSTOMPER_FOOD)
-                .add(ModItems.MELON_ICE_CREAM.get());
-        tag(ModTags.Items.FROSTOMPER_TEMPT_ITEMS)
-                .addTag(ModTags.Items.FROSTOMPER_FOOD);
-        tag(ModTags.Items.BABY_FROSTOMPER_FOOD)
-                .add(ModItems.SAP_ICE_CREAM.get());
-        tag(ModTags.Items.BABY_FROSTOMPER_TEMPT_ITEMS)
-                .addTag(ModTags.Items.BABY_FROSTOMPER_FOOD);
-
-        tag(ModTags.Items.PSYCHO_BEAR_FOOD)
-                .add(ModItems.PSYCHO_BERRY_ICE_CREAM.get()); // TODO: Change to beast chops
-        tag(ModTags.Items.PSYCHO_BEAR_TEMPT_ITEMS)
-                .addTag(ModTags.Items.PSYCHO_BEAR_FOOD);
-        tag(ModTags.Items.BABY_PSYCHO_BEAR_FOOD)
-                .add(ModItems.PSYCHO_BERRY.get());
-        tag(ModTags.Items.BABY_PSYCHO_BEAR_TEMPT_ITEMS)
-                .addTag(ModTags.Items.BABY_PSYCHO_BEAR_FOOD);
-        tag(ModTags.Items.PSYCHO_BEAR_PACIFIER)
-                .add(ModItems.PSYCHO_BERRY_ICE_CREAM.get());*/
+    private static TagKey<Item> tag(String name) {
+        return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
     }
 }

@@ -1,10 +1,7 @@
 package com.prohitman.beyondthepond.events;
 
 import com.prohitman.beyondthepond.BeyondThePond;
-import com.prohitman.beyondthepond.entities.BoPCrab;
-import com.prohitman.beyondthepond.entities.BoPDolphin;
-import com.prohitman.beyondthepond.entities.BoPFish;
-import com.prohitman.beyondthepond.entities.BoPTurtle;
+import com.prohitman.beyondthepond.entities.*;
 import com.prohitman.beyondthepond.init.ModEntities;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -46,5 +43,6 @@ public class CommonModEvents {
 
         event.put(ModEntities.GREEN_SEA_TURTLE.get(), BoPTurtle.createAttributes().build());
 
+        event.put(ModEntities.TRENCH_MONSTER.get(), TrenchMonster.createAttributes().build());
     }
 }

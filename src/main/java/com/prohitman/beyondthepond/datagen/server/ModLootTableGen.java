@@ -1,4 +1,3 @@
-/*
 package com.prohitman.beyondthepond.datagen.server;
 
 import net.minecraft.core.HolderLookup;
@@ -22,4 +21,3 @@ public class ModLootTableGen extends LootTableProvider {
     protected void validate(WritableRegistry<LootTable> writableregistry, ValidationContext validationcontext, ProblemReporter.Collector problemreporter$collector) {
     }
 }
-*/

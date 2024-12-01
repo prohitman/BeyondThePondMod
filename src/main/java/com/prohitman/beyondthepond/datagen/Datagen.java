@@ -30,7 +30,7 @@ public class Datagen {
         generator.addProvider(event.includeServer(), new ModItemTagsGen(packOutput, lookupProvider, tagLookup, fileHelper));
         generator.addProvider(event.includeServer(), new ModEntityTagsGen(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new ModRecipesGen(packOutput, lookupProvider));
-        //generator.addProvider(event.includeServer(), new ModLootTableGen(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new ModLootTableGen(packOutput, lookupProvider));
 
         generator.addProvider(event.includeClient(), new ModItemModelGen(packOutput, fileHelper));
         generator.addProvider(event.includeClient(), new ModLangGen(packOutput));

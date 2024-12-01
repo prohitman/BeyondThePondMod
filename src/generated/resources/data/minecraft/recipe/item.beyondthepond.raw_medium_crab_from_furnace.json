@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "beyondthepond:raw_medium_crab"
+  },
+  "result": {
+    "count": 1,
+    "id": "beyondthepond:cooked_medium_crab"
+  }
+}

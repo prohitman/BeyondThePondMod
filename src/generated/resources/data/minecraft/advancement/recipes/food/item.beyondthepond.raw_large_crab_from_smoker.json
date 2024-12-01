@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_item.beyondthepond.raw_large_crab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "beyondthepond:raw_large_crab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:item.beyondthepond.raw_large_crab_from_smoker"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_item.beyondthepond.raw_large_crab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:item.beyondthepond.raw_large_crab_from_smoker"
+    ]
+  }
+}

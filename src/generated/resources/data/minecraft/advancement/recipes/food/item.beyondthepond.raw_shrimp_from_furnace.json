@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_item.beyondthepond.raw_shrimp": {
+      "conditions": {
+        "items": [
+          {
+            "items": "beyondthepond:raw_shrimp"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:item.beyondthepond.raw_shrimp_from_furnace"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_item.beyondthepond.raw_shrimp"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:item.beyondthepond.raw_shrimp_from_furnace"
+    ]
+  }
+}

@@ -58,6 +58,8 @@ public class ClientModEvents {
             registerRenderers(ModEntities.SALLY_LIGHTFOOT_CRAB.get(), "sally_lightfoot_crab", false, false, 0, 0.1f );
 
             registerRenderers(ModEntities.GREEN_SEA_TURTLE.get(), "green_sea_turtle", true, false, 0, 0.75f);
+
+            registerRenderers(ModEntities.TRENCH_MONSTER.get(), "trench_monster", false, false, 0, 0);
         });
     }
 

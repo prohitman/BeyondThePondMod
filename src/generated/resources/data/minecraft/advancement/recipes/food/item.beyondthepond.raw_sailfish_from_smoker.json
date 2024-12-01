@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_item.beyondthepond.raw_sailfish": {
+      "conditions": {
+        "items": [
+          {
+            "items": "beyondthepond:raw_sailfish"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:item.beyondthepond.raw_sailfish_from_smoker"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_item.beyondthepond.raw_sailfish"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:item.beyondthepond.raw_sailfish_from_smoker"
+    ]
+  }
+}

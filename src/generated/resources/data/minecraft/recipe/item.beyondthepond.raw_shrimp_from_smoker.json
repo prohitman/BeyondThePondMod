@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "cookingtime": 50,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "beyondthepond:raw_shrimp"
+  },
+  "result": {
+    "count": 1,
+    "id": "beyondthepond:cooked_shrimp"
+  }
+}

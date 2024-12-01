@@ -47,7 +47,42 @@ public class ModLangGen extends LanguageProvider {
         addItem(ModItems.JAPANESE_SPIDER_CRAB_SPAWN_EGG);
         addItem(ModItems.TASMANIAN_CRAB_SPAWN_EGG);
         addItem(ModItems.SALLY_LIGHTFOOT_CRAB_SPAWN_EGG);
+        addItem(ModItems.TRENCH_MONSTER_SPAWN_EGG);
 
+        addItem(ModItems.RAINBOW_TROUT_BUCKET);
+        addItem(ModItems.CHANNEL_CATFISH_BUCKET);
+        addItem(ModItems.LONGNOSE_GAR_BUCKET);
+        addItem(ModItems.LARGEMOUTH_BASS_BUCKET);
+
+        addItem(ModItems.RAW_ISOPOD);
+        addItem(ModItems.RAW_COOKIECUTTER);
+        addItem(ModItems.RAW_CUTTLEFISH);
+        addItem(ModItems.RAW_LARGE_CRAB);
+        addItem(ModItems.RAW_LOBSTER);
+        addItem(ModItems.RAW_MEDIUM_CRAB);
+        addItem(ModItems.RAW_SAILFISH);
+        addItem(ModItems.RAW_SHARK);
+        addItem(ModItems.RAW_SHRIMP);
+        addItem(ModItems.RAW_SMALL_CRAB);
+        addItem(ModItems.RAW_SPIDERCRAB);
+        addItem(ModItems.RAW_STINGRAY);
+        addItem(ModItems.RAW_SUNFISH);
+        addItem(ModItems.RAW_TURTLE);
+        addItem(ModItems.COOKED_ISOPOD);
+        addItem(ModItems.COOKED_COOKIECUTTER);
+        addItem(ModItems.COOKED_CUTTLEFISH);
+        addItem(ModItems.COOKED_LARGE_CRAB);
+        addItem(ModItems.COOKED_LOBSTER);
+        addItem(ModItems.COOKED_MEDIUM_CRAB);
+        addItem(ModItems.COOKED_SAILFISH);
+        addItem(ModItems.COOKED_SHARK);
+        addItem(ModItems.COOKED_SHRIMP);
+        addItem(ModItems.COOKED_SMALL_CRAB);
+        addItem(ModItems.COOKED_SPIDERCRAB);
+        addItem(ModItems.COOKED_STINGRAY);
+        addItem(ModItems.COOKED_SUNFISH);
+        addItem(ModItems.COOKED_TURTLE);
+        
         //Entities
         addEntity(ModEntities.RAINBOW_TROUT);
         addEntity(ModEntities.SPINNER_DOLPHIN);
@@ -72,6 +107,7 @@ public class ModLangGen extends LanguageProvider {
         addEntity(ModEntities.JAPANESE_SPIDER_CRAB);
         addEntity(ModEntities.TASMANIAN_CRAB);
         addEntity(ModEntities.SALLY_LIGHTFOOT_CRAB);
+        addEntity(ModEntities.TRENCH_MONSTER);
 
         add("itemGroup." + BeyondThePond.MODID, "Beyond The Pond");
     }

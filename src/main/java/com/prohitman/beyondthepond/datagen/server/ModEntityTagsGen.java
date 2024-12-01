@@ -34,6 +34,7 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.HUMPBACK_WHALE.get())
                 .add(ModEntities.ORCA.get());
         this.tag(EntityTypeTags.AQUATIC)
+                .add(ModEntities.TRENCH_MONSTER.get())
                 .add(ModEntities.SALLY_LIGHTFOOT_CRAB.get())
                 .add(ModEntities.TASMANIAN_CRAB.get())
                 .add(ModEntities.JAPANESE_SPIDER_CRAB.get())
@@ -55,6 +56,7 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.GREEN_SEA_TURTLE.get())
                 .add(ModEntities.SPINNER_DOLPHIN.get());
         this.tag(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH)
+                .add(ModEntities.TRENCH_MONSTER.get())
                 .add(ModEntities.SALLY_LIGHTFOOT_CRAB.get())
                 .add(ModEntities.TASMANIAN_CRAB.get())
                 .add(ModEntities.JAPANESE_SPIDER_CRAB.get())
@@ -80,6 +82,7 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
                 .add(ModEntities.GREEN_SEA_TURTLE.get())
                 .add(ModEntities.SPINNER_DOLPHIN.get());
         this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
+                .add(ModEntities.TRENCH_MONSTER.get())
                 .add(ModEntities.SALLY_LIGHTFOOT_CRAB.get())
                 .add(ModEntities.TASMANIAN_CRAB.get())
                 .add(ModEntities.JAPANESE_SPIDER_CRAB.get())

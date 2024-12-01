@@ -1,6 +1,8 @@
 package com.prohitman.beyondthepond.entities;
 
 import com.prohitman.beyondthepond.entities.goals.BoPPanicGoal;
+import com.prohitman.beyondthepond.init.ModEntities;
+import com.prohitman.beyondthepond.init.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -365,6 +367,15 @@ public class BoPFish extends AbstractBoPFish implements GeoEntity, NeutralMob {
 
     @Override
     public ItemStack getBucketItemStack() {
+        if(this.getType() == ModEntities.RAINBOW_TROUT.get()){
+            return new ItemStack(ModItems.RAINBOW_TROUT_BUCKET.get());
+        } else if(this.getType() == ModEntities.LONGNOSE_GAR.get()){
+            return new ItemStack(ModItems.LONGNOSE_GAR_BUCKET.get());
+        } else if(this.getType() == ModEntities.LARGEMOUTH_BASS.get()){
+            return new ItemStack(ModItems.LARGEMOUTH_BASS_BUCKET.get());
+        } else if(this.getType() == ModEntities.CHANNEL_CATFISH.get()){
+            return new ItemStack(ModItems.CHANNEL_CATFISH_BUCKET.get());
+        }
         return null;
     }
 

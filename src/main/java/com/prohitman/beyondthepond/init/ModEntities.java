@@ -23,7 +23,7 @@ public class ModEntities {
                             1,
                             0,
                             90,
-                            false,
+                            true,
                             false,
                             true,
                             3,
@@ -72,7 +72,7 @@ public class ModEntities {
                                     1,
                                     0,
                                     85,
-                                    false,
+                                    true,
                                     false,
                                     true,
                                     3,
@@ -104,7 +104,7 @@ public class ModEntities {
                                     1,
                                     0,
                                     90,
-                                    false,
+                                    true,
                                     false,
                                     true,
                                     3,
@@ -135,7 +135,7 @@ public class ModEntities {
                                     1,
                                     0,
                                     65,
-                                    false,
+                                    true,
                                     false,
                                     true,
                                     3,
@@ -338,6 +338,9 @@ public class ModEntities {
                                     0.25
                             )),
                     MobCategory.CREATURE).sized(1f, 0.75f).build("green_sea_turtle"));
+    public static final DeferredHolder<EntityType<?>, EntityType<TrenchMonster>> TRENCH_MONSTER = ENTITIES.register("trench_monster",
+            () -> EntityType.Builder.of((TrenchMonster::new),
+                    MobCategory.MONSTER).sized(3f, 3f).build("trench_monster"));
     /**
      * Add Scaling, then the rest of BoPDolphins, then Special Mobs,/ then the Rest of Mobs, then Tweak each Mob, TrenchMonster/, then items/buckets/drops, then recipes,/ then Marianas Trench biome, then Mob Spawns/
      Need configurable eye heights for all mobs
