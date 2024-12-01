@@ -171,7 +171,7 @@ public class BoPTurtle extends Animal implements GeoEntity {
     }
 
     public static boolean checkTurtleSpawnRules(
-            EntityType<BoPTurtle> pTurtle, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom
+            EntityType<? extends BoPTurtle> pTurtle, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom
     ) {
         return pPos.getY() < pLevel.getSeaLevel() + 4 && TurtleEggBlock.onSand(pLevel, pPos) && isBrightEnoughToSpawn(pLevel, pPos);
     }
